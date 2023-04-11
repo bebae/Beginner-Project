@@ -32,6 +32,10 @@ public class BookView {
         return Integer.parseInt(input);
     }
     // 로그인 후 보일 목록
+    // 책 검색 | 책 반납 / 책 검색 | 책 입고
+    public int bookUse(Scanner sc){
+        return 0;
+    }
 
     public void selectBook(List<BookVO> books){
         // 쪽으로 나타내는 전체 리스트 나중에 추가 작업 필요
