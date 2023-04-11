@@ -33,6 +33,7 @@ public class FrontController {
                 case 3:
 //                    BookVo loginMember = view.로그인(권한 없는 사용자);
                     List<BookVO> selectBook = controller.selectBook();
+                    view.selectBook(selectBook);
 
                     break;
                 case 0:

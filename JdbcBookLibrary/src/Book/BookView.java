@@ -18,13 +18,21 @@ public class BookView {
     public int mainMenu(Scanner sc) {
         StringBuilder sb = new StringBuilder();
         sb.append("──────────────────────────────────────────────\n");
-        sb.append("1. 로그인 | 2. 회원가입 | 3. 비회원 | 0. 종료\n");
+        sb.append(" 1. 로그인 | 2. 회원가입 | 3. 비회원 | 0. 종료\n");
         sb.append("──────────────────────────────────────────────\n");
         sb.append("메뉴를 선택 > ");
         System.out.print(sb);
         sb.setLength(0);
-        return Integer.parseInt(sc.nextLine());
+        String input = sc.nextLine();
+        while(!input.matches("^[0-3]+$")) {
+            System.out.println("잘못된 입력입니다.");
+            System.out.print(sb);
+            input = sc.nextLine();
+        }
+        return Integer.parseInt(input);
     }
+    // 로그인 후 보일 목록
+
     public void selectBook(List<BookVO> books){
         // 쪽으로 나타내는 전체 리스트 나중에 추가 작업 필요
         System.out.println("전체 목록");
