@@ -4,7 +4,6 @@ import java.sql.Date;
 
 public class CustomerVO {
    private String id;
-   private String password;
    private String name;
    private Date birthDate;
    private String phonenumber;
@@ -17,12 +16,10 @@ public class CustomerVO {
    
    public CustomerVO(String id, String password) {
   	 this.id = id;
-  	 this.password = password;
    }
    
-   public CustomerVO (String id, String password, String name, Date birthDate, String phonenumber, String email, String address, double loansnumber) {
+   public CustomerVO (String id, String name, Date birthDate, String phonenumber, String email, String address, double loansnumber) {
   	 this.id = id;
-  	 this.password = password;
   	 this.name = name;
   	 this.birthDate = birthDate;
   	 this.phonenumber = phonenumber;
@@ -37,14 +34,6 @@ public class CustomerVO {
    
    public void setId(String id) {
   	 this.id = id;
-   }
-   
-   public String getPassword() {
-  	 return password;
-   }
-   
-   public void setPassword(String password) {
-  	 this.password = password;
    }
    
    public String getName() {
