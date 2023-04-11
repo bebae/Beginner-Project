@@ -1,3 +1,8 @@
+import Book.BookController;
+import Book.BookVO;
+import Book.BookView;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class FrontController {
@@ -22,11 +27,13 @@ public class FrontController {
                     break;
                 // 회원가입
                 case 2:
-//                    BookVO joinMember = view.회원가입(scanner)
+//                    Book.BookVO joinMember = view.회원가입(scanner)
                     break;
                 // 비회원
                 case 3:
 //                    BookVo loginMember = view.로그인(권한 없는 사용자);
+                    List<BookVO> selectBook = controller.selectBook();
+
                     break;
                 case 0:
                     System.out.println("프로그램을 종료합니다.");
