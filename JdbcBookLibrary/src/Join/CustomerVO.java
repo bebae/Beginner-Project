@@ -1,11 +1,10 @@
 package Join;
 
-import java.sql.Date;
-
 public class CustomerVO {
    private String id;
+   private String password;
    private String name;
-   private Date birthDate;
+   private String birthDate;
    private String phonenumber;
    private String email;
    private String address;
@@ -16,10 +15,12 @@ public class CustomerVO {
    
    public CustomerVO(String id, String password) {
   	 this.id = id;
+  	 this.password = password;
    }
    
-   public CustomerVO (String id, String name, Date birthDate, String phonenumber, String email, String address, double loansnumber) {
+   public CustomerVO (String id, String password, String name, String birthDate, String phonenumber, String email, String address, double loansnumber) {
   	 this.id = id;
+  	 this.password = password;
   	 this.name = name;
   	 this.birthDate = birthDate;
   	 this.phonenumber = phonenumber;
@@ -36,6 +37,14 @@ public class CustomerVO {
   	 this.id = id;
    }
    
+   public String getPassword() {
+  	 return password;
+   }
+   
+   public void setPassword(String Password) {
+  	 this.password = password;
+   }
+   
    public String getName() {
   	 return name;
    }
@@ -44,11 +53,11 @@ public class CustomerVO {
   	 this.name = name;
    }
    
-   public Date getBirthDate() {
+   public String getBirthDate() {
   	 return birthDate;
    }
    
-   public void setBirthDate(Date birthDate) {
+   public void setBirthDate(String birthDate) {
   	 this.birthDate = birthDate;
    }
    

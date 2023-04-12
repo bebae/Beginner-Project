@@ -7,17 +7,19 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SignDAO {
+	
 	public List<SignVO> getSigns() throws Exception {
  	 Class.forName("oracle.jdbc.driver.OracleDriver");
- 	 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","pc04","java");
+ 	 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.142.23:1521:xe","project","java");
  	 Statement statement = connection.createStatement();
- 	 String sql = "select id, password";
+ 	 String sql = "select m_id, password from member";
  	 ResultSet resultSet = statement.executeQuery(sql);
  	 List<SignVO> list = new ArrayList<>();
  	 while(resultSet.next()) {
-			 String id = resultSet.getString("id");
+			 String id = resultSet.getString("m_id");
 			 String password = resultSet.getString("password");
 			 list.add(new SignVO(id, password));
 		 }
@@ -30,16 +32,16 @@ public class SignDAO {
   
   public SignVO getSign(String serachId) throws Exception {
  	 Class.forName("oracle.jdbc.driver.OracleDriver");
- 	 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","pc04","java");
- 	 String sql = "select id, password where id = ?";
+ 	 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.142.23:1521:xe","project","java");
+ 	 String sql = "select m_id, password where m_id = ?";
  	 PreparedStatement statement = connection.prepareStatement(sql);
  	 statement.setString(1, serachId);
  	 ResultSet resultSet = statement.executeQuery();
  	 SignVO vo = null;
  	 
  	 if (resultSet.next()) {
- 		 resultSet.getString("id");
- 		 String id = resultSet.getString("id");
+ 		 resultSet.getString("m_id");
+ 		 String id = resultSet.getString("m_id");
  		 String password = resultSet.getString("password");
  		 vo = new SignVO(id, password);
  	 }
@@ -51,8 +53,8 @@ public class SignDAO {
   
   public int insertSign(SignVO vo) throws Exception {
 		 Class.forName("oracle.jdbc.driver.OracleDriver");
-		 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","pc04","java");
-		 String sql = "INSERT INTO memo (id, password) VALUES (sign_seq.nextval, ?, ?)";
+		 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.142.23:1521:xe","project","java");
+		 String sql = "INSERT INTO memo (m_id, password) VALUES (sign_seq.nextval, ?, ?)";
 		 PreparedStatement statement = connection.prepareStatement(sql);
 		 statement.setString(1, vo.getId());
 		 statement.setString(2, vo.getPassword());
@@ -70,4 +72,19 @@ public class SignDAO {
 	 public int deleteSign(String deleteId) {
 		 return 0;
 	 }
+
+	public static SignDAO getInstance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map<String, Object> selectSign(String id, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean checkLogin(String id, String password) {
+		
+		return true;
+	}
 }
