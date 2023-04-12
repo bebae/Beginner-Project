@@ -13,6 +13,7 @@ public class BookController {
     public List<BookVO> selectBook() throws Exception {
         return service.selectAll();
     }
+    public void m() {}
     public BookVO insertBook(BookVO vo) throws Exception {
         return service.insertBook(vo);
     }

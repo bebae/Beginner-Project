@@ -22,19 +22,38 @@ public class BookView {
         sb.append("──────────────────────────────────────────────\n");
         sb.append("메뉴를 선택 > ");
         System.out.print(sb);
-        sb.setLength(0);
         String input = sc.nextLine();
         while(!input.matches("^[0-3]+$")) {
             System.out.println("잘못된 입력입니다.");
             System.out.print(sb);
             input = sc.nextLine();
         }
+        sb.setLength(0);
         return Integer.parseInt(input);
     }
     // 로그인 후 보일 목록
     // 책 검색 | 책 반납 / 책 검색 | 책 입고
     public int bookUse(Scanner sc){
-        return 0;
+        StringBuilder sb = new StringBuilder();
+        sb.append("──────────────────────────────────────────────\n");
+        sb.append(" 1. 책 검색 | 2. ");
+        if (sc == null) {
+            sb.append("책 반납 | ");
+        } else {
+            sb.append("책 입고 | ");
+        }
+        sb.append("3. 메인화면으로 |\n");
+        sb.append("──────────────────────────────────────────────\n");
+        System.out.println(sb);
+        assert sc != null;          // sc가 null 이라면 예외를 throw 하는 문법
+        String input = sc.nextLine();
+        while(!input.matches("^[0-3]+$")) {
+            System.out.println("잘못된 입력입니다.");
+            System.out.print(sb);
+            input = sc.nextLine();
+        }
+        sb.setLength(0);
+        return Integer.parseInt(input);
     }
 
     public void selectBook(List<BookVO> books){

@@ -32,8 +32,18 @@ public class FrontController {
                 // 비회원
                 case 3:
 //                    BookVo loginMember = view.로그인(권한 없는 사용자);
-                    List<BookVO> selectBook = controller.selectBook();
-                    view.selectBook(selectBook);
+                    int bookcase = view.bookUse(sc);
+                    switch (bookcase) {
+                        case 1 :
+                            List<BookVO> selectBook = controller.selectBook();
+                            view.selectBook(selectBook);
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        default: break;
+                    }
 
                     break;
                 case 0:
