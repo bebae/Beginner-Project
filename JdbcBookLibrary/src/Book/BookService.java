@@ -12,7 +12,7 @@ public class BookService {
 
     // 전체 검색
     public List<BookVO> selectAll() throws Exception {return dao.selectAll();}
-    public BookVO selectByBookId(int bookId) { return dao.findByBookId(bookId);}
+    public List<BookVO> selectWord(String title, int num) throws Exception { return dao.selectWord(title, num);}
 
     public BookVO insertBook(BookVO vo) throws Exception {
         return dao.insertBook(vo);
