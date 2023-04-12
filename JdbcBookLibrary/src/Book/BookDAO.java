@@ -41,8 +41,9 @@ public class BookDAO {
             String author = rs.getString("author");
             String genre = rs.getString("genre");
             String callSing = rs.getString("callsign_num");
+            String year = Integer.toString(rs.getInt("PUBLICATION_YEAR"));
             String loanYN = rs.getString("loan_YN");
-            list.add(new BookVO(title, author, genre, callSing, loanYN));
+            list.add(new BookVO(title, author, genre, callSing, year, loanYN));
         }
         close(conn, stmt, rs);
         return list;
@@ -60,6 +61,9 @@ public class BookDAO {
             pstmt = conn.prepareStatement("SELECT * FROM book where author LIKE '%' || ? || '%'");
         } else if (num == 3) {
             pstmt = conn.prepareStatement("SELECT * FROM book where genre LIKE '%' || ? || '%'");
+        } else if (num == 4) {
+            pstmt = conn.prepareStatement("SELECT * FROM book where publication_year LIKE '%' || ? ");
+            pstmt.setInt(1, Integer.parseInt(selectWord));
         }
 
         assert pstmt != null;
@@ -72,8 +76,9 @@ public class BookDAO {
             String author = rs.getString("author");
             String genre = rs.getString("genre");
             String callSing = rs.getString("callsign_num");
+            String year = Integer.toString(rs.getInt("PUBLICATION_YEAR"));
             String loanYN = rs.getString("loan_YN");
-            list.add(new BookVO(title, author, genre, callSing, loanYN));
+            list.add(new BookVO(title, author, genre, callSing, year, loanYN));
         }
         close(conn, pstmt, rs);
         return list;

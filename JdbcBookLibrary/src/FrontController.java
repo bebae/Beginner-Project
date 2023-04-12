@@ -16,7 +16,6 @@ public class FrontController {
     private BookView view = BookView.getInstance();
     private Scanner sc = new Scanner(System.in);
     public void process() throws Exception {
-        view.welcome();
         while (true) {
             // View에 선택창 불러오는 부분
             int menu = view.mainMenu(sc);
@@ -24,10 +23,12 @@ public class FrontController {
                 // 로그인
                 case 1:
 //                    BookVo loginMember = view.로그인(scanner);
+                    System.out.println("로그인 미구현");
                     break;
                 // 회원가입
                 case 2:
 //                    Book.BookVO joinMember = view.회원가입(scanner)
+                    System.out.println("회원가입 미구현");
                     break;
                 // 비회원
                 case 3:
@@ -52,11 +53,11 @@ public class FrontController {
                                 System.out.print("출판년도 입력 : ");
                             }
                             List<BookVO> selectTitle = controller.selectWord(sc.nextLine(),bookIfSelect);
-                            view.selectBook(selectTitle);
+                            view.bookIfSelect(selectTitle);
 
                             continue;
                         case 3 :        // 책 입고, 책 반납
-                            System.out.println("미구현");
+                            System.out.println("책 입고 미구현");
                             continue;
                         case 0:
                             System.out.println("메인화면으로 돌아갑니다.");

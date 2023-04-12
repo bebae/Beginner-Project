@@ -12,10 +12,6 @@ public class BookView {
         return instance;
     }
     public static Map<String, Object> login;
-    public void welcome() {
-        System.out.println("나의 메모");
-    }
-
     public int mainMenu(Scanner sc) {
         StringBuilder sb = new StringBuilder();
         sb.append("────────────────────────────────────────────────\n");
@@ -35,15 +31,9 @@ public class BookView {
     // 책 검색 | 책 반납 / 책 검색 | 책 입고
     public int bookUse(Scanner sc, int nonMember){
         StringBuilder sb = new StringBuilder();
-        sb.append("─────────────────────────────────────────────────────────\n");
-        sb.append(" 1. 책 목록 | 2. 책 검색 | ");
-        if (0 != nonMember) {
-            sb.append(" 3. 책 반납 | ");
-        } else {
-            sb.append(" 3. 책 입고 | ");
-        }
-        sb.append("0. 메인화면으로\n");
-        sb.append("─────────────────────────────────────────────────────────\n");
+        sb.append("─────────────────────────────────────────────────────────────────────\n");
+        sb.append(" 1. 책 목록 | 2. 책 검색 | 3. 책 반납 | 4. 책 입고 | 0. 메인화면으로\n");
+        sb.append("─────────────────────────────────────────────────────────────────────\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
         assert sc != null;          // sc가 null 이라면 예외를 throw 하는 문법
@@ -80,21 +70,21 @@ public class BookView {
     }
     public void bookIfSelect(List<BookVO> books){
         // 쪽으로 나타내는 전체 리스트 나중에 추가 작업 필요
-        System.out.println(" 전체 목록");
+        System.out.println(" 검색 목록");
         System.out.println("───────────────────────────────────────────────────────────────");
         for (BookVO vo: books) {
-            System.out.println(vo);
+            System.out.printf("%40s%20s%20s%15s%4s%15s%n", vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign(), vo.getYear(), vo.getLoanYN());
         }
         System.out.println("───────────────────────────────────────────────────────────────");
     }
 
     public void selectBook(List<BookVO> books){
         // 쪽으로 나타내는 전체 리스트 나중에 추가 작업 필요
-        System.out.println(" 검색 목록");
+        System.out.println(" 전체 목록");
         System.out.println("───────────────────────────────────────────────────────────────");
         for (BookVO vo: books) {
-            System.out.println(vo);
-            //System.out.printf("%-40s%-20s%-20s%-15s%-15s%n", vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign(), vo.getLoanYN());
+            //System.out.println(vo);
+            System.out.printf("%-50s %-10s %-10s %-15s %-4s %-30s", vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign(), vo.getYear(), vo.getLoanYN());
         }
         System.out.println("───────────────────────────────────────────────────────────────");
     }

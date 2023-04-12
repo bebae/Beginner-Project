@@ -1,11 +1,11 @@
 package Book;
 
 public class BookVO {
+    private String year;
     private String id;
     private String title;
     private String author;
     private String genre;
-    private int publicationYear;
     private int isbn;
     private String callSign;
 
@@ -41,14 +41,6 @@ public class BookVO {
         this.genre = genre;
     }
 
-    public int getPublicationYear() {
-        return publicationYear;
-    }
-
-    public void setPublicationYear(int publicationYear) {
-        this.publicationYear = publicationYear;
-    }
-
     public int getIsbn() {
         return isbn;
     }
@@ -65,6 +57,14 @@ public class BookVO {
         this.callSign = callSign;
     }
 
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
     public String getLoanYN() {
         return loanYN;
     }
@@ -78,11 +78,12 @@ public class BookVO {
     public BookVO() {
 
     }
-    public BookVO(String title, String author, String genre, String callSign, String loanYN) {
+    public BookVO(String title, String author, String genre, String callSign, String year, String loanYN) {
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.callSign = callSign;
+        this.year = year;
         this.loanYN = loanYN;
     }
 
@@ -92,9 +93,11 @@ public class BookVO {
         sb.append(title).append(" | ");
         sb.append(author).append(" | ");
         sb.append(genre).append(" | ");
-        sb.append(publicationYear).append(" | ");
         sb.append(callSign).append(" | ");
+        sb.append(year).append(" | ");
         sb.append(loanYN).append(" |");
         return sb.toString();
     }
+
+
 }
