@@ -15,11 +15,11 @@ CREATE TABLE book (
     p_name           VARCHAR2(100) NOT NULL,
     price            NUMBER(8) NULL
 );
-CREATE UNIQUE INDEX xpkÃ¥ ON
+CREATE UNIQUE INDEX xpkì±… ON
     book (
         b_id
     ASC );
-ALTER TABLE book ADD CONSTRAINT xpkÃ¥ PRIMARY KEY ( b_id );
+ALTER TABLE book ADD CONSTRAINT xpkì±… PRIMARY KEY ( b_id );
 CREATE TABLE loan (
     loan_date        DATE NOT NULL,
     ex_return_date   DATE NOT NULL,
@@ -28,11 +28,11 @@ CREATE TABLE loan (
     l_number         CHAR(11) NOT NULL,
     m_id             CHAR(8) NOT NULL
 );
-CREATE UNIQUE INDEX xpk´ëÃâ ON
+CREATE UNIQUE INDEX xpkëŒ€ì¶œ ON
     loan (
         l_number
     ASC );
-ALTER TABLE loan ADD CONSTRAINT xpk´ëÃâ PRIMARY KEY ( l_number );
+ALTER TABLE loan ADD CONSTRAINT xpkëŒ€ì¶œ PRIMARY KEY ( l_number );
 CREATE TABLE member (
     m_id       CHAR(8) NOT NULL,
     name       VARCHAR2(50) NOT NULL,
@@ -42,26 +42,26 @@ CREATE TABLE member (
     address    VARCHAR2(120) NOT NULL,
     loans_num  NUMBER NULL
 );
-CREATE UNIQUE INDEX xpkÈ¸¿ø ON
+CREATE UNIQUE INDEX xpkíšŒì› ON
     member (
         m_id
     ASC );
-ALTER TABLE member ADD CONSTRAINT xpkÈ¸¿ø PRIMARY KEY ( m_id );
+ALTER TABLE member ADD CONSTRAINT xpkíšŒì› PRIMARY KEY ( m_id );
 CREATE TABLE publisher (
     p_name    VARCHAR2(100) NOT NULL,
     id        NUMBER(3) NOT NULL,
     phone_num CHAR(18) NULL
 );
-CREATE UNIQUE INDEX xpkÃâÆÇ»ç ON
+CREATE UNIQUE INDEX xpkì¶œíŒì‚¬ ON
     publisher (
         p_name
     ASC );
-ALTER TABLE publisher ADD CONSTRAINT xpkÃâÆÇ»ç PRIMARY KEY ( p_name );
+ALTER TABLE publisher ADD CONSTRAINT xpkì¶œíŒì‚¬ PRIMARY KEY ( p_name );
 ALTER TABLE book ADD (
     CONSTRAINT r_3 FOREIGN KEY ( p_name )
         REFERENCES publisher ( p_name )
 );
--- Publisher Å×ÀÌºí id °ª ÀÚµ¿ Áõ°¡
+-- Publisher í…Œì´ë¸” id ê°’ ìë™ ì¦ê°€
 CREATE SEQUENCE publisher_id_seq
   START WITH 1
   INCREMENT BY 1;
@@ -99,98 +99,99 @@ ALTER TABLE loan ADD (
         REFERENCES member ( m_id )
 );
 
+DELETE FROM book;
 
--- book Å×ÀÌºí Á¦¸ñ, ÁöÀºÀÌ, ÃâÆÇ»ç, ¹ßÇà¿¬µµ, ISBN, °¡°İ, ÁÖÁ¦(Àå¸£), µî·Ï¹øÈ£, Ã»±¸±âÈ£ 
+-- book í…Œì´ë¸” ì œëª©, ì§€ì€ì´, ì¶œíŒì‚¬, ë°œí–‰ì—°ë„, ISBN, ê°€ê²©, ì£¼ì œ(ì¥ë¥´), ë“±ë¡ë²ˆí˜¸, ì²­êµ¬ê¸°í˜¸ 
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('ÀÌ¹æÀÎ', '¾Ëº£¸£ Ä«¹¿', 'ºê¶ó¿îÈú', 2022, 9791158251215, 13000, 'ÇÁ¶û½º ¼Ò¼³', 'SE0000648797', '863-22-53');
+    values ('ì´ë°©ì¸', 'ì•Œë² ë¥´ ì¹´ë®ˆ', 'ë¸Œë¼ìš´í', 2022, 9791158251215, 13000, 'í”„ë‘ìŠ¤ ì†Œì„¤', 'SE0000648797', '863-22-53');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('È­ÇĞÁø·áÇĞ', 'Å×¶ó»ç¿Í Ä«Ã÷Åä½Ã', '¼öÆÛ³ë¹Ù', 2020, 9791189396060, 25000, 'ÇÑÀÇÇĞ', 'SE0000673477', '519-23-3');
+    values ('í™”í•™ì§„ë£Œí•™', 'í…Œë¼ì‚¬ì™€ ì¹´ì¸ í† ì‹œ', 'ìˆ˜í¼ë…¸ë°”', 2020, 9791189396060, 25000, 'í•œì˜í•™', 'SE0000673477', '519-23-3');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('ÇöÁ¸À¸·ÎÀÇ ÃÊ´ë', 'Æ¿µç ¿¡µå¿öÁî', 'ÇÑ±¹ »ì·½ Å¸ÀÓ±³À°C&P', 2021,  9791191239461, 18000, '±âµ¶±³ ½Å¾Ó', 'SE0000673349', '234.8-23-5');
+    values ('í˜„ì¡´ìœ¼ë¡œì˜ ì´ˆëŒ€', 'í‹¸ë“  ì—ë“œì›Œì¦ˆ', 'í•œêµ­ ì‚´ë ˜ íƒ€ì„êµìœ¡C&P', 2021,  9791191239461, 18000, 'ê¸°ë…êµ ì‹ ì•™', 'SE0000673349', '234.8-23-5');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('ÇØ¿Í ¹Ù¶÷ÀÌ ½¬¾î°¡´Â Áı', 'ÀÌ±ÔÈ¯', '¿¹ÀÏ¹Ìµğ¾î', 2023, 9791189886202, 18000, 'Ä£È¯°æ °ÇÃà', 'SE0000673362', '544.1-23-1');
+    values ('í•´ì™€ ë°”ëŒì´ ì‰¬ì–´ê°€ëŠ” ì§‘', 'ì´ê·œí™˜', 'ì˜ˆì¼ë¯¸ë””ì–´', 2023, 9791189886202, 18000, 'ì¹œí™˜ê²½ ê±´ì¶•', 'SE0000673362', '544.1-23-1');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('´ÙÀÌ´ÙÀÌ ¼­Á¡¿¡¼­', '´ÙÁö¸® È÷»çÄÚ', '´Ï¶óÀÌÄ«³ªÀÌ', 2023, 9791198177803, 15000, 'ÀÏº» ¹®ÇĞ', 'SE0000673150', '834-23-3');
+    values ('ë‹¤ì´ë‹¤ì´ ì„œì ì—ì„œ', 'ë‹¤ì§€ë¦¬ íˆì‚¬ì½”', 'ë‹ˆë¼ì´ì¹´ë‚˜ì´', 2023, 9791198177803, 15000, 'ì¼ë³¸ ë¬¸í•™', 'SE0000673150', '834-23-3');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('´Ù¸¥ ¸öµéÀ» À§ÇÑ µğÀÚÀÎ', '»ç¶ó Çîµå·»', '±è¿µ»ç', 2023, 9788934943396, 17800, 'µğÀÚÀÎ', 'SE0000673223', '338.1-23-1');
+    values ('ë‹¤ë¥¸ ëª¸ë“¤ì„ ìœ„í•œ ë””ìì¸', 'ì‚¬ë¼ í—¨ë“œë Œ', 'ê¹€ì˜ì‚¬', 2023, 9788934943396, 17800, 'ë””ìì¸', 'SE0000673223', '338.1-23-1');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('³»ÀÏÀÇ ½ºÅ¸¹÷½º¸¦ Ã£¾Æ¶ó', '¸¶ÀÌÅ¬ ¸ğ', 'µ¥ÀÌ¿ø', 2022, 9791168470415, 18000, 'ÁÖ½Ä ÅõÀÚ', 'SE0000673221', '327.856-23-10');
+    values ('ë‚´ì¼ì˜ ìŠ¤íƒ€ë²…ìŠ¤ë¥¼ ì°¾ì•„ë¼', 'ë§ˆì´í´ ëª¨', 'ë°ì´ì›', 2022, 9791168470415, 18000, 'ì£¼ì‹ íˆ¬ì', 'SE0000673221', '327.856-23-10');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('ÇØÀû', 'Á¦ÀÓ½º µ¥ÀÌºñ½º', 'Ã¥¼¼»ó¾î¸°ÀÌ', 2022, 9791159318207, 13000, '¼¼°è»ç', 'SJ0000154800', '¾Æ 909-23-8');
+    values ('í•´ì ', 'ì œì„ìŠ¤ ë°ì´ë¹„ìŠ¤', 'ì±…ì„¸ìƒì–´ë¦°ì´', 2022, 9791159318207, 13000, 'ì„¸ê³„ì‚¬', 'SJ0000154800', 'ì•„ 909-23-8');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('Å« ¹è¿Í ÀÛÀº ¹è¿Í ¿À·»Áö', '¾È³ª ¸Æ±×¸®°Å', 'Å°Áî¿¥', 2022, 9791164632909, 13000, '¿µ¹Ì ¹®ÇĞ', 'SJ0000154819', '¾Æ 843-23-39');
+    values ('í° ë°°ì™€ ì‘ì€ ë°°ì™€ ì˜¤ë Œì§€', 'ì•ˆë‚˜ ë§¥ê·¸ë¦¬ê±°', 'í‚¤ì¦ˆì— ', 2022, 9791164632909, 13000, 'ì˜ë¯¸ ë¬¸í•™', 'SJ0000154819', 'ì•„ 843-23-39');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('Ã¹ ÀÎ»ç', 'Å¬·¹¸£ ¸£ºÎ¸£', '¿»·Î½ºÅæ', 2023, 9791187079361, 16000, 'ÇÁ¶û½º ¹®ÇĞ', 'SJ0000154705', '¾Æ 863-23-6');
+    values ('ì²« ì¸ì‚¬', 'í´ë ˆë¥´ ë¥´ë¶€ë¥´', 'ì˜ë¡œìŠ¤í†¤', 2023, 9791187079361, 16000, 'í”„ë‘ìŠ¤ ë¬¸í•™', 'SJ0000154705', 'ì•„ 863-23-6');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('Á¶±¹¿¡ ÇÉ µµ¶óÁö²É', 'ÇÑ»ó½Ä', '°¡¹®ºñ¾î¸°ÀÌ °¡¹®ºñ', 2021, 9788969024183, 11000, 'Ã¢ÀÛ µ¿È­', 'SJ0000154789', '¾Æ 813.7-23-61');
+    values ('ì¡°êµ­ì— í•€ ë„ë¼ì§€ê½ƒ', 'í•œìƒì‹', 'ê°€ë¬¸ë¹„ì–´ë¦°ì´ ê°€ë¬¸ë¹„', 2021, 9788969024183, 11000, 'ì°½ì‘ ë™í™”', 'SJ0000154789', 'ì•„ 813.7-23-61');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('¿ôÀ½ÀÌ ¸ØÃßÁö ¾Ê´Â ¸÷¾µ º´¿¡ °É¸° ¾ÆÀÌ', '¼öÁø', 'Å°Å«µµÅä¸®', 2023, 9791192762012, 14000, 'Ã¢ÀÛ ±×¸²Ã¥', 'SJ0000154691', '¾Æ 813.7-23-55');
+    values ('ì›ƒìŒì´ ë©ˆì¶”ì§€ ì•ŠëŠ” ëª¹ì“¸ ë³‘ì— ê±¸ë¦° ì•„ì´', 'ìˆ˜ì§„', 'í‚¤í°ë„í† ë¦¬', 2023, 9791192762012, 14000, 'ì°½ì‘ ê·¸ë¦¼ì±…', 'SJ0000154691', 'ì•„ 813.7-23-55');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('¾Æ³¦¾øÀÌ ÁÖ´Â ³ª¹«', '½© ½Ç¹ö½ºÅ¸ÀÎ', '¼±¿µ»ç', 2022, 9788975584350, 8000, '¿µ¹Ì ¹®ÇĞ', 'SJ0000154441', '¾Æ 843-22-392');
+    values ('ì•„ë‚Œì—†ì´ ì£¼ëŠ” ë‚˜ë¬´', 'ì‰˜ ì‹¤ë²„ìŠ¤íƒ€ì¸', 'ì„ ì˜ì‚¬', 2022, 9788975584350, 8000, 'ì˜ë¯¸ ë¬¸í•™', 'SJ0000154441', 'ì•„ 843-22-392');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('º£ÀÌÂ¡¿¡ ¿Â ¼­¾çÀÎ, Á¶¼±°ú ¸¶ÁÖÄ¡´Ù', '¼Õ¼º¿í', 'µ¿ºÏ¾Æ¿ª»çÀç´Ü', 2022, 9788961877503, 10000, 'Á¶¼±»ç', 'SE0000673272', 'Á¤Ã¥ 911.05-23-1');
+    values ('ë² ì´ì§•ì— ì˜¨ ì„œì–‘ì¸, ì¡°ì„ ê³¼ ë§ˆì£¼ì¹˜ë‹¤', 'ì†ì„±ìš±', 'ë™ë¶ì•„ì—­ì‚¬ì¬ë‹¨', 2022, 9788961877503, 10000, 'ì¡°ì„ ì‚¬', 'SE0000673272', 'ì •ì±… 911.05-23-1');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('ºÎ´Â ¾îµğ¼­ ¿À´Â°¡', 'Àª¸®½º ¿ÍÆ²½º', 'ÄÜÅÙÃ÷±×·ì Æ÷·¹½ºÆ®', 2022, 9791192625775, 15000, 'ºÎÀÚ ¼º°ø¹ı', 'SE0000670351', '325.2113-23-1');
+    values ('ë¶€ëŠ” ì–´ë””ì„œ ì˜¤ëŠ”ê°€', 'ìœŒë¦¬ìŠ¤ ì™€í‹€ìŠ¤', 'ì½˜í…ì¸ ê·¸ë£¹ í¬ë ˆìŠ¤íŠ¸', 2022, 9791192625775, 15000, 'ë¶€ì ì„±ê³µë²•', 'SE0000670351', '325.2113-23-1');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('°æÁÖ»êÃ¥:½ÉÈ­·É¿¡¼­ ³»·Á¿À´Ù', '±èÀ¯°æ', '´«ºû ÃâÆÇ»ç', 2022, 9788974099671, 25000, '±¹³» ¿©Çà', 'SE0000672798', '981.18502-22-3');
+    values ('ê²½ì£¼ì‚°ì±…:ì‹¬í™”ë ¹ì—ì„œ ë‚´ë ¤ì˜¤ë‹¤', 'ê¹€ìœ ê²½', 'ëˆˆë¹› ì¶œíŒì‚¬', 2022, 9788974099671, 25000, 'êµ­ë‚´ ì—¬í–‰', 'SE0000672798', '981.18502-22-3');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('¸ğºñ µñ', 'Çã¸Õ ¸áºô', 'Çö´ë Áö¼º', 2022, 9791139707137, 19900, '¿µ¹Ì ¹®ÇĞ', 'SE0000671888', '843.4-22-25');
+    values ('ëª¨ë¹„ ë”•', 'í—ˆë¨¼ ë©œë¹Œ', 'í˜„ëŒ€ ì§€ì„±', 2022, 9791139707137, 19900, 'ì˜ë¯¸ ë¬¸í•™', 'SE0000671888', '843.4-22-25');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('¸¶Áö¸· ¿©Çà:ÀÎ»ı Æ¯°­', 'È«ÁøÈ­', '¼Ö·Î¸ó', 2021, 9788982556005, 14000, '±âµ¶±³ ½Å¾Ó »ıÈ°', 'SE0000672362', '234.8-22-219');
+    values ('ë§ˆì§€ë§‰ ì—¬í–‰:ì¸ìƒ íŠ¹ê°•', 'í™ì§„í™”', 'ì†”ë¡œëª¬', 2021, 9788982556005, 14000, 'ê¸°ë…êµ ì‹ ì•™ ìƒí™œ', 'SE0000672362', '234.8-22-219');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('±³À°Àº »ç¶ûÀÌ´Ù', '½É½ÂÈ¯', '±³À°°úÇĞ»ç', 2022, 9788925417196, 13000, '±³À° Ã¶ÇĞ', 'SE0000672253', '370.1-22-24');
+    values ('êµìœ¡ì€ ì‚¬ë‘ì´ë‹¤', 'ì‹¬ìŠ¹í™˜', 'êµìœ¡ê³¼í•™ì‚¬', 2022, 9788925417196, 13000, 'êµìœ¡ ì² í•™', 'SE0000672253', '370.1-22-24');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('ÇØ°á»ç', '¾ö¹Î½Ä', '¾ÆÀÌ·¯ºêºÏ', 2022, 9791192644042, 7000, 'ÇÑ±¹ Çö´ë ¼Ò¼³', 'SE0000671874', '813.7-22-782');
+    values ('í•´ê²°ì‚¬', 'ì—„ë¯¼ì‹', 'ì•„ì´ëŸ¬ë¸Œë¶', 2022, 9791192644042, 7000, 'í•œêµ­ í˜„ëŒ€ ì†Œì„¤', 'SE0000671874', '813.7-22-782');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('ÇÑ±¹¾î ÀĞ±â ±³À°·Ğ', 'ÇÏÃ¤Çö', 'ÇÑ±¹ ¹®È­»ç', 2022, 9791169190367, 22000, 'ÇÑ±¹¾î ±³À°', 'SE0000672464', '374.71-22-6');
+    values ('í•œêµ­ì–´ ì½ê¸° êµìœ¡ë¡ ', 'í•˜ì±„í˜„', 'í•œêµ­ ë¬¸í™”ì‚¬', 2022, 9791169190367, 22000, 'í•œêµ­ì–´ êµìœ¡', 'SE0000672464', '374.71-22-6');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('ÇÇ³ëÅ°¿À', 'Ä«¸¦·Î Äİ·Îµğ', '±Û´ãÃâÆÇ»ç', 2022, 9791159351303, 13800, 'ÀÌÅ»¸®¾Æ ¹®ÇĞ', 'SE0000671783', '883-22-6');
+    values ('í”¼ë…¸í‚¤ì˜¤', 'ì¹´ë¥¼ë¡œ ì½œë¡œë””', 'ê¸€ë‹´ì¶œíŒì‚¬', 2022, 9791159351303, 13800, 'ì´íƒˆë¦¬ì•„ ë¬¸í•™', 'SE0000671783', '883-22-6');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('´ëÁß¹®È­ÀÇ ÀÌÇØ', 'Á¤ÁØ¿µ', 'ÇÑ±¹¹æ¼ÛÅë½Å´ëÇĞ±³ÃâÆÇ¹®È­¿ø', 2018, 9788920028915, 93300, '´ëÁß ¹®È­', 'SE0000673499', '331.53-23-2');
+    values ('ëŒ€ì¤‘ë¬¸í™”ì˜ ì´í•´', 'ì •ì¤€ì˜', 'í•œêµ­ë°©ì†¡í†µì‹ ëŒ€í•™êµì¶œíŒë¬¸í™”ì›', 2018, 9788920028915, 93300, 'ëŒ€ì¤‘ ë¬¸í™”', 'SE0000673499', '331.53-23-2');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('ÀÏº» ¿ÂÃµ ¿©Çà', 'ÀÎÆäÀÎÅÍ±Û·Î¹ú', '²ŞÀÇ Áöµµ', 2022, 9791167620361, 18000, 'ÀÏº» ¿©Çà', 'SE0000673237', '981.302-23-2');
+    values ('ì¼ë³¸ ì˜¨ì²œ ì—¬í–‰', 'ì¸í˜ì¸í„°ê¸€ë¡œë²Œ', 'ê¿ˆì˜ ì§€ë„', 2022, 9791167620361, 18000, 'ì¼ë³¸ ì—¬í–‰', 'SE0000673237', '981.302-23-2');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('ÀÎÁ¶ÀÌ ÆÄ¸®', '±èÁö¼±', '³Ø¼­½ºbooks ³Ø¼­½º', 2023, 9791166834264, 18000, 'ÇØ¿Ü ¿©Çà ¾È³»', 'SE0000673236', '982.6302-23-1');
+    values ('ì¸ì¡°ì´ íŒŒë¦¬', 'ê¹€ì§€ì„ ', 'ë„¥ì„œìŠ¤books ë„¥ì„œìŠ¤', 2023, 9791166834264, 18000, 'í•´ì™¸ ì—¬í–‰ ì•ˆë‚´', 'SE0000673236', '982.6302-23-1');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('¿îÀÌ¶õ ¹«¾ùÀÎ°¡:Çà¿î°ú ºÒ¿î¿¡ °üÇÑ ¿À·ù¿Í Áø½Ç', '½ºÆ¼ºì D.ÇìÀÏ½º', '¼Ò¼ÒÀÇ Ã¥', 2023, 9791188941919, 19000, '¿î¼ö', 'SE0000673256', '188-23-1');
+    values ('ìš´ì´ë€ ë¬´ì—‡ì¸ê°€:í–‰ìš´ê³¼ ë¶ˆìš´ì— ê´€í•œ ì˜¤ë¥˜ì™€ ì§„ì‹¤', 'ìŠ¤í‹°ë¸ D.í—¤ì¼ìŠ¤', 'ì†Œì†Œì˜ ì±…', 2023, 9791188941919, 19000, 'ìš´ìˆ˜', 'SE0000673256', '188-23-1');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('ÄÚÆæÇÏ°Õ »ïºÎÀÛ', 'Åäº£ µğÆ²·¹¿ì¼¾', 'À»À¯¹®È­»ç', 2022, 9788932461311, 13000, 'µ§¸¶Å© ¹®ÇĞ', 'SE0000673261', '859.81-23-1-1');
+    values ('ì½”íœí•˜ê² ì‚¼ë¶€ì‘', 'í† ë²  ë””í‹€ë ˆìš°ì„¼', 'ì„ìœ ë¬¸í™”ì‚¬', 2022, 9788932461311, 13000, 'ë´ë§ˆí¬ ë¬¸í•™', 'SE0000673261', '859.81-23-1-1');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('Ã³À½ºÎÅÍ ³»³» ÁÁ¾ÆÇß¾î', '¿ÍÅ¸¾ß ¸®»ç', 'ºñÃ¤ ±è¿µ»ç', 2022, 9788934949015, 15800, 'ÀÏº» Çö´ë ¼Ò¼³', 'SE0000673359', '833.6-23-22');
+    values ('ì²˜ìŒë¶€í„° ë‚´ë‚´ ì¢‹ì•„í–ˆì–´', 'ì™€íƒ€ì•¼ ë¦¬ì‚¬', 'ë¹„ì±„ ê¹€ì˜ì‚¬', 2022, 9788934949015, 15800, 'ì¼ë³¸ í˜„ëŒ€ ì†Œì„¤', 'SE0000673359', '833.6-23-22');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('Æ¯º°ÇÏ°Ô ÆÄ¸®=Paris', '±èÁøÁÖ', 'µğ½ºÄ¿¹ö¸®¹Ìµğ¾î', 2023, 9791188829323, 19000, '¿©Çà Á¤º¸', 'SE0000673244', '982.6302-23-2');
+    values ('íŠ¹ë³„í•˜ê²Œ íŒŒë¦¬=Paris', 'ê¹€ì§„ì£¼', 'ë””ìŠ¤ì»¤ë²„ë¦¬ë¯¸ë””ì–´', 2023, 9791188829323, 19000, 'ì—¬í–‰ ì •ë³´', 'SE0000673244', '982.6302-23-2');
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)
-    values ('µğÅ×ÀÏÀÇ ¹ß°ß:°í°´À» »ç·ÎÀâÀº 101°¡Áö ÇÑ ²ı', '»ı°¢³ëÆ®', 'À§Áî´ıÇÏ¿ì½º', 2023, 9791168125841, 18000, 'ºê·£µù ¸¶ÄÉÆÃ Àü·«', 'SE0000673225', '325.571-23-4');
+    values ('ë””í…Œì¼ì˜ ë°œê²¬:ê³ ê°ì„ ì‚¬ë¡œì¡ì€ 101ê°€ì§€ í•œ ë—', 'ìƒê°ë…¸íŠ¸', 'ìœ„ì¦ˆë¤í•˜ìš°ìŠ¤', 2023, 9791168125841, 18000, 'ë¸Œëœë”© ë§ˆì¼€íŒ… ì „ëµ', 'SE0000673225', '325.571-23-4');
     
 
 
