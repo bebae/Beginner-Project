@@ -40,24 +40,22 @@ public class FrontController {
                             continue;
                         case 2 :        // 책 검색
                             int bookIfSelect = view.bookIfSelectMenu(sc);
-                            switch (bookIfSelect) {
-                                case 1 :
-                                    System.out.print("제목 입력 : ");
-                                    List<BookVO> selectTitle = controller.selectWord(sc.nextLine(),1);
-                                    view.selectBook(selectTitle);
-                                    break;
-                                case 2 :
-                                    System.out.print("저자 입력 : ");
-                                    List<BookVO> selectAuthor = controller.selectWord(sc.nextLine(),2);
-                                    view.selectBook(selectAuthor);
-                                    break;
-                                case 3 :
-                                    break;
-                                default:
-                                    break;
+                            if (bookIfSelect == 0) {
+
+                            } else if (bookIfSelect == 1) {
+                                System.out.print("제목 입력 : ");
+                            } else if (bookIfSelect == 2) {
+                                System.out.print("저자 입력 : ");
+                            } else if (bookIfSelect == 3) {
+                                System.out.print("장르 입력 : ");
+                            } else if (bookIfSelect == 4) {
+                                System.out.print("출판년도 입력 : ");
                             }
+                            List<BookVO> selectTitle = controller.selectWord(sc.nextLine(),bookIfSelect);
+                            view.selectBook(selectTitle);
+
                             continue;
-                        case 3 :
+                        case 3 :        // 책 입고, 책 반납
                             System.out.println("미구현");
                             continue;
                         case 0:

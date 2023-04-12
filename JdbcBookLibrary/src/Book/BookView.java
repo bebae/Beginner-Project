@@ -1,6 +1,7 @@
 package Book;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class BookView {
@@ -10,7 +11,7 @@ public class BookView {
     public static BookView getInstance() {
         return instance;
     }
-
+    public static Map<String, Object> login;
     public void welcome() {
         System.out.println("나의 메모");
     }
@@ -34,7 +35,7 @@ public class BookView {
     // 책 검색 | 책 반납 / 책 검색 | 책 입고
     public int bookUse(Scanner sc, int nonMember){
         StringBuilder sb = new StringBuilder();
-        sb.append("────────────────────────────────────────────────\n");
+        sb.append("─────────────────────────────────────────────────────────\n");
         sb.append(" 1. 책 목록 | 2. 책 검색 | ");
         if (0 != nonMember) {
             sb.append(" 3. 책 반납 | ");
@@ -42,7 +43,7 @@ public class BookView {
             sb.append(" 3. 책 입고 | ");
         }
         sb.append("0. 메인화면으로\n");
-        sb.append("────────────────────────────────────────────────\n");
+        sb.append("─────────────────────────────────────────────────────────\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
         assert sc != null;          // sc가 null 이라면 예외를 throw 하는 문법
@@ -61,14 +62,15 @@ public class BookView {
         sb.append("───────────────────────────────────────────────────────\n");
         sb.append(" 1. 제목으로 검색\n");
         sb.append(" 2. 작가로 검색\n");
-        sb.append(" 3. 출판사로 검색\n");
-        sb.append(" 4. 검색취소 \n");
+        sb.append(" 3. 장르로 검색\n");
+        sb.append(" 4. 출판년도로 검색\n");
+        sb.append(" 0. 검색취소 \n");
         sb.append("───────────────────────────────────────────────────────\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
         //assert sc != null;          // sc가 null 이라면 예외를 throw 하는 문법
         String input = sc.nextLine();
-        while(!input.matches("^[0-4]+$")) {
+        while(!input.matches("^[0-5]+$")) {
             System.out.println("잘못된 입력입니다.");
             System.out.print(sb);
             input = sc.nextLine();
@@ -92,6 +94,7 @@ public class BookView {
         System.out.println("───────────────────────────────────────────────────────────────");
         for (BookVO vo: books) {
             System.out.println(vo);
+            //System.out.printf("%-40s%-20s%-20s%-15s%-15s%n", vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign(), vo.getLoanYN());
         }
         System.out.println("───────────────────────────────────────────────────────────────");
     }
