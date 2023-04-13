@@ -44,7 +44,8 @@ public class FrontController {
                                 if (pageNum == 1) {
                                     pageSelect++;
                                 } else if (pageNum == 2) {
-                                    pageSelect--;
+                                    if (--pageSelect <= 0)
+                                        pageSelect = 1;
                                 } else {
                                     break;
                                 }
@@ -80,7 +81,11 @@ public class FrontController {
                             }
                             continue;
                         case 5:        // 책 수정
-                            BookVO uBook = view.updateBook(sc);
+                            List<BookVO> selectBook = controller.selectBook();
+                            view.selectBook(selectBook);
+
+                            BookVO uBook = view.updateBook(sc,selectBook);                     // 수정할 항목
+                            int updateBook = controller.updateBook(uBook);
 
                             continue;
                         case 6:        // 책 삭제

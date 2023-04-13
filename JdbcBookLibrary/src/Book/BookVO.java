@@ -38,6 +38,10 @@ public class BookVO {
         this.isbn = isbn;
     }
 
+    public BookVO(String title) {
+        this.title = title;
+    }
+
     public String getId() {
         return id;
     }

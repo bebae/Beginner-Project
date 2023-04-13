@@ -18,4 +18,8 @@ public class BookService {
     public int insertBook(BookVO vo) throws Exception {
         return dao.insertBook(vo);
     }
+
+    public int updateBook(BookVO vo) throws Exception {
+        return dao.updateBook(vo);
+    }
 }

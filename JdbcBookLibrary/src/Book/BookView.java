@@ -35,7 +35,7 @@ public class BookView {
     public int bookUse(Scanner sc){
         StringBuilder sb = new StringBuilder();
         sb.append("─────────────────────────────────────────────────────────────────────────────────\n");
-        sb.append(" 1. 책 목록 | 2. 책 검색 | 3. 책 반납 | 4. 입고 5. 수정 6. 삭제 | 0. 메인화면으로\n");
+        sb.append(" 1.책 목록 | 2.책 검색 | 3.책 반납 | 4.입고 | 5.수정 6.삭제 | 0. 메인화면으로\n");
         sb.append("─────────────────────────────────────────────────────────────────────────────────\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
@@ -95,11 +95,11 @@ public class BookView {
     // 페이징 기법 메뉴창
     public int detailBookMenu(Scanner sc, int pageNum){
         StringBuilder sb = new StringBuilder();
-        sb.append("─────────────────────────────────────────────────────────────\n");
+        sb.append("────────────────────────────────────────────────────────────────────\n");
         sb.append("│ 현재 쪽:");
         sb.append(pageNum);
-        sb.append("│ 1. 다음 페이지 │ 2. 이전 페이지 │ 0. 목록 나가기 │\n");
-        sb.append("─────────────────────────────────────────────────────────────\n");
+        sb.append(" │ 1.다음 페이지 │ 2.이전 페이지 │ 0. 목록 나가기 │\n");
+        sb.append("───────────────────────────────────────────────────────────────────\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
         String input = sc.nextLine();
@@ -125,12 +125,72 @@ public class BookView {
         String isbn_num = bookInsertRandom.generateISBN();
         return new BookVO(title, author, genre, publisher, year, price, key, call, isbn_num);
     }
-    public BookVO updateBook(Scanner sc){
-        System.out.print("수정할 번호 입력 :");
-        int no = Integer.parseInt(sc.nextLine());
+
+    public BookVO updateBook(Scanner sc, List<BookVO> books){
+        String title = null;
+        String author = null;
+        String genre = null;
+        String publisher = null;
+        String year = null;
+        int price;
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("────────────────────────────────────────────────────────────────────\n");
+        sb.append("\t\t 수정할 책 선택 : ");
+        System.out.println(sb);
+        String num = sc.nextLine();
+        while(!num.matches("^[1-9]+$")) {
+            System.out.println("잘못된 입력입니다.");
+            System.out.print(sb);
+            num = sc.nextLine();
+        }
+        sb.setLength(0);
+
+        StringBuilder sb1 = new StringBuilder();
+        sb1.append("┌────────────────────────────────────────────────────────────────────┐\n");
+        sb1.append("│ 1.제목 │ 2.저자 │ 3.장르 │ 4.출판사 │ 5.발행연도 │ 6.가격 │ 0.취소 │\n");
+        sb1.append("└────────────────────────────────────────────────────────────────────┘\n");
+        sb1.append("수정할 항목 입력 :");
+        System.out.println(sb1);
+        String input = sc.nextLine();
+        while(!input.matches("^[0-6]+$")) {
+            System.out.println("잘못된 입력입니다. 숫자만 입력해주세요.");
+            System.out.print(sb);
+            input = sc.nextLine();
+        }
+
+        BookVO uBook = new BookVO();
+        switch (input) {
+            case "1":
+                title = BookInsertRandom.inputLimit("제목 : ", 50);
+                uBook.setId(title);
+                break;
+            case "2":
+                author = BookInsertRandom.inputLimit("저자 : ", 15);
+                uBook.setAuthor(author);
+                break;
+            case "3":
+                genre = BookInsertRandom.inputLimit("장르 : ", 15);
+                uBook.setGenre(genre);
+                break;
+            case "4":
+                publisher = BookInsertRandom.inputLimit("출판사 : ", 10);
+                uBook.setPublisher(publisher);
+                break;
+            case "5":
+                year = BookInsertRandom.inputLimit("발행연도 : ", 4, true);
+                uBook.setYear(year);
+                break;
+            case "6":
+                price = Integer.parseInt(BookInsertRandom.inputLimit("가격(원) : ", 10, false));
+                uBook.setPrice(price);
+                break;
+            default:
+                return null;
+        }
 
 
-        return new BookVO();
+        return uBook;
     }
     public void updateResult(int count){
         if (count > 0) {

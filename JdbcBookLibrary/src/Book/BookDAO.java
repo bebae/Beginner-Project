@@ -21,6 +21,14 @@ public class BookDAO {
 //        String user = "project";
         return DriverManager.getConnection(url, user, "java");
     }
+    public void close(Connection conn, Statement pstmt) throws SQLException {
+        if (pstmt != null) {
+            pstmt.close();
+        }
+        if (conn != null) {
+            conn.close();
+        }
+    }
 
     // 검색 워드
     public List<BookVO> selectAllPage(int pageNum, int amount) throws Exception {
@@ -127,7 +135,6 @@ public class BookDAO {
         return list;
     }
 
-
     public int insertBook(BookVO vo) throws Exception {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -152,12 +159,22 @@ public class BookDAO {
         close(conn, pstmt);
         return count;
     }
-    public void close(Connection conn, Statement pstmt) throws SQLException {
-        if (pstmt != null) {
-            pstmt.close();
-        }
-        if (conn != null) {
-            conn.close();
-        }
+
+
+    public int updateBook(BookVO vo) throws Exception {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        conn = getConnection();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("수정부분입니다.\n");
+        sb.append(vo.getId());
+
+
+        System.out.println(sb);
+
+        int count = 0;
+        return count;
     }
 }
