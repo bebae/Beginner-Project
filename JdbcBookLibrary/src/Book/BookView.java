@@ -160,10 +160,11 @@ public class BookView {
         }
 
         BookVO uBook = new BookVO();
+        uBook.setId(String.valueOf(books.get(Integer.parseInt(num))));
         switch (input) {
             case "1":
                 title = BookInsertRandom.inputLimit("제목 : ", 50);
-                uBook.setId(title);
+                uBook.setTitle(title);
                 break;
             case "2":
                 author = BookInsertRandom.inputLimit("저자 : ", 15);
@@ -188,17 +189,26 @@ public class BookView {
             default:
                 return null;
         }
+        return uBook;
+    }
 
+    public BookVO deleteBook(Scanner sc, List<BookVO> books){
+        StringBuilder sb = new StringBuilder();
+        sb.append("────────────────────────────────────────────────────────────────────\n");
+        sb.append("\t\t 수정할 책 선택 : ");
+        System.out.println(sb);
+        String num = sc.nextLine();
+        while(!num.matches("^[1-9]+$")) {
+            System.out.println("잘못된 입력입니다.");
+            System.out.print(sb);
+            num = sc.nextLine();
+        }
+        BookVO uBook = new BookVO();
+        uBook.setId(String.valueOf(books.get(Integer.parseInt(num))));
 
         return uBook;
     }
-    public void updateResult(int count){
-        if (count > 0) {
-            System.out.println("정상적으로 삭제되었습니다.");
-        } else {
-            System.out.println("정상적으로 삭제되지 않았습니다.");
-        }
-    }
+
 
     public void insertResult(int count) {
         if (count > 0) {
@@ -206,6 +216,13 @@ public class BookView {
             System.out.println();
         } else {
             System.out.println("책이 정상적으로 입고 되지 않았습니다.");
+        }
+    }
+    public void updateResult(int count){
+        if (count > 0) {
+            System.out.println("정상적으로 업데이트되었습니다.");
+        } else {
+            System.out.println("정상적으로 업데이트되지 않았습니다.");
         }
     }
 }

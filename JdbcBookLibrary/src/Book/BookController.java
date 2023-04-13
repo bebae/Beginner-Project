@@ -29,4 +29,8 @@ public class BookController {
     public int updateBook(BookVO vo) throws Exception {
         return service.updateBook(vo);
     }
+
+    public int deleteBook(BookVO vo) throws Exception {
+        return service.deleteBook(vo);
+    }
 }

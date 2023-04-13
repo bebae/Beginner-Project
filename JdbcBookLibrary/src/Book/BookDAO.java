@@ -168,13 +168,101 @@ public class BookDAO {
         conn = getConnection();
 
         StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE book SET ");
+        boolean isFirst = true;
+        if (vo.getTitle() != null) {
+            sb.append("title=?");
+            isFirst = false;
+        }
+        if (vo.getAuthor() != null) {
+            if (!isFirst) {
+                sb.append(",");
+            }
+            sb.append("author=?");
+            isFirst = false;
+        }
+        if (vo.getPublisher() != null) {
+            if (!isFirst) {
+                sb.append(",");
+            }
+            sb.append("p_name=?");
+            isFirst = false;
+        }
+        if (vo.getGenre() != null) {
+            if (!isFirst) {
+                sb.append(",");
+            }
+            sb.append("genre=?");
+            isFirst = false;
+        }
+        if (vo.getYear() != null) {
+            if (!isFirst) {
+                sb.append(",");
+            }
+            sb.append("publication_year=?");
+            isFirst = false;
+        }
+        if (vo.getPrice() != 0) {
+            if (!isFirst) {
+                sb.append(",");
+            }
+            sb.append("price=? ");
+        }
+        sb.append(" WHERE b_id=?");
+        pstmt = conn.prepareStatement(sb.toString());
+        sb.setLength(0);
+
+        int index = 1;
+        if (vo.getTitle() != null) {
+            pstmt.setString(index, vo.getTitle());
+            index++;
+        }
+        if (vo.getAuthor() != null) {
+            pstmt.setString(index, vo.getAuthor());
+            index++;
+        }
+        if (vo.getPublisher() != null) {
+            pstmt.setString(index, vo.getPublisher());
+            index++;
+        }
+        if (vo.getGenre() != null) {
+            pstmt.setString(index, vo.getGenre());
+            index++;
+        }
+        if (vo.getYear() != null) {
+            pstmt.setString(index, vo.getYear());
+            index++;
+        }
+        if (vo.getPrice() != 0) {
+            pstmt.setString(index, String.valueOf(vo.getPrice()));
+            index++;
+        }
+        pstmt.setString(index, vo.getId());
+
+
         sb.append("수정부분입니다.\n");
-        sb.append(vo.getId());
-
-
+        sb.append(vo.getId()).append(vo.getTitle()).append(vo.getAuthor()).append(vo.getPublisher()).append(vo.getGenre());
         System.out.println(sb);
 
-        int count = 0;
+        int count = pstmt.executeUpdate();
+        close(conn, pstmt);
+        return count;
+    }
+
+    public int deleteBook(BookVO vo) throws Exception {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        conn = getConnection();
+
+        StringBuilder sb = new StringBuilder();
+
+
+        pstmt = conn.prepareStatement(sb.toString());
+        sb.setLength(0);
+
+        int count = pstmt.executeUpdate();
+        close(conn, pstmt);
         return count;
     }
 }

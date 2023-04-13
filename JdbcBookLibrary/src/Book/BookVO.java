@@ -38,13 +38,7 @@ public class BookVO {
         this.isbn = isbn;
     }
 
-    public BookVO(String title) {
-        this.title = title;
-    }
-
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
     public void setId(String id) {
         this.id = id;
@@ -129,7 +123,7 @@ public class BookVO {
         if (year != null) sb.append(year).append(" | ");
         if (callSign != null) sb.append(callSign).append(" | ");
         if (isbn != null) sb.append(isbn).append(" | ");
-        if (loanYN != null) sb.append(loanYN).append(" |");
+        if (loanYN != null) sb.append(loanYN).append("|");
         return sb.toString();
     }
 

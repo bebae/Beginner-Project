@@ -22,4 +22,8 @@ public class BookService {
     public int updateBook(BookVO vo) throws Exception {
         return dao.updateBook(vo);
     }
+
+    public int deleteBook(BookVO vo) throws Exception {
+        return dao.deleteBook(vo);
+    }
 }
