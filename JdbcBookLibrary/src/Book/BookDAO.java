@@ -23,17 +23,29 @@ public class BookDAO {
     }
 
     // 검색 워드
-    public List<BookVO> selectAll() throws Exception {
+    public List<BookVO> selectAllPage(int pageNum, int amount) throws Exception {
         Connection conn = null;
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
         conn = getConnection();
-        stmt = conn.createStatement();
+
+        // 조회할 페이지 번호와 한 페이지당 데이터 수를 기반으로 시작 번호와 끝 번호를 계산합니다.
+        int startRow = (pageNum - 1) * amount + 1;
+        int endRow = startRow + amount - 1;
 
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT * FROM book");
+        sb.append("SELECT * FROM ");
+        sb.append("(SELECT ROWNUM AS rnum, book.* FROM ");
+        sb.append("(SELECT * FROM book ORDER BY callsign_num ASC) book ");
+        sb.append("WHERE ROWNUM <= ?) ");
+        sb.append("WHERE rnum >= ?");
         String sql = sb.toString();
-        rs = stmt.executeQuery(sql);
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, endRow);
+        pstmt.setInt(2, startRow);
+        rs = pstmt.executeQuery();
+
+
         List<BookVO> list = new ArrayList<>();
         while (rs.next()) {
             String title = rs.getString("title");
@@ -45,7 +57,36 @@ public class BookDAO {
             list.add(new BookVO(title, author, genre, callSing, year, loanYN));
         }
         rs.close();
-        close(conn, stmt);
+        close(conn, pstmt);
+        return list;
+    }
+    public List<BookVO> selectAll() throws Exception {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        conn = getConnection();
+
+        // 조회할 페이지 번호와 한 페이지당 데이터 수를 기반으로 시작 번호와 끝 번호를 계산합니다.
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM book");
+        String sql = sb.toString();
+        pstmt = conn.prepareStatement(sql);
+        rs = pstmt.executeQuery();
+
+
+        List<BookVO> list = new ArrayList<>();
+        while (rs.next()) {
+            String title = rs.getString("title");
+            String author = rs.getString("author");
+            String genre = rs.getString("genre");
+            String callSing = rs.getString("callsign_num");
+            String year = Integer.toString(rs.getInt("PUBLICATION_YEAR"));
+            String loanYN = rs.getString("loan_YN");
+            list.add(new BookVO(title, author, genre, callSing, year, loanYN));
+        }
+        rs.close();
+        close(conn, pstmt);
         return list;
     }
     public List<BookVO> selectWord(String selectWord, int num) throws Exception {

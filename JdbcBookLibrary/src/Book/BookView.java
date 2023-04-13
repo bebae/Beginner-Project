@@ -71,7 +71,7 @@ public class BookView {
         return Integer.parseInt(input);
     }
     public void bookIfSelect(List<BookVO> books){
-        // 쪽으로 나타내는 전체 리스트 나중에 추가 작업 필요
+        StringBuilder sb = new StringBuilder();
         int i = 0;
         System.out.println(" 검색 목록");
         System.out.println("───────────────────────────────────────────────────────────────");
@@ -82,9 +82,9 @@ public class BookView {
     }
 
     public void selectBook(List<BookVO> books){
-        // 쪽으로 나타내는 전체 리스트 나중에 추가 작업 필요
+        StringBuilder sb = new StringBuilder();
         int i = 0;
-        System.out.println(" 전체 목록");
+        System.out.println(" 목록");
         System.out.println("───────────────────────────────────────────────────────────────────────────────────────");
         for (BookVO vo: books) {
             System.out.printf("%2d. %-30s\t%-9s\t%-7s\t%-9s\t%-4s\t%-3s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign(), vo.getYear(), vo.getLoanYN());
@@ -92,8 +92,24 @@ public class BookView {
         System.out.println("───────────────────────────────────────────────────────────────────────────────────────");
     }
 
-    public void detailBook(List<BookVO> books){
-
+    // 페이징 기법 메뉴창
+    public int detailBookMenu(Scanner sc, int pageNum){
+        StringBuilder sb = new StringBuilder();
+        sb.append("─────────────────────────────────────────────────────────────\n");
+        sb.append("│ 현재 쪽:");
+        sb.append(pageNum);
+        sb.append("│ 1. 다음 페이지 │ 2. 이전 페이지 │ 0. 목록 나가기 │\n");
+        sb.append("─────────────────────────────────────────────────────────────\n");
+        sb.append("번호 선택 > ");
+        System.out.print(sb);
+        String input = sc.nextLine();
+        while(!input.matches("^[0-2]+$")) {
+            System.out.println("잘못된 입력입니다.");
+            System.out.print(sb);
+            input = sc.nextLine();
+        }
+        sb.setLength(0);
+        return Integer.parseInt(input);
     }
 
     public BookVO insertBook(Scanner sc) throws Exception {

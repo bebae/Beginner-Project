@@ -19,6 +19,7 @@ public class FrontController {
         while (true) {
             // View에 선택창 불러오는 부분
             int menu = view.mainMenu(sc);
+            int pageSelect = 1;         // 페이지 기본값
             switch (menu) {
                 // 로그인
                 case 1:
@@ -35,11 +36,21 @@ public class FrontController {
 //                    BookVo loginMember = view.로그인(권한 없는 사용자);
                     int bookcase = view.bookUse(sc);
                     switch (bookcase) {
-                        case 1 :        // 책 목록
-                            List<BookVO> selectBook = controller.selectBook();
-                            view.selectBook(selectBook);
-                            continue;
-                        case 2 :        // 책 검색
+                        case 1:        // 책 목록 페이징
+                            while (true) {
+                                List<BookVO> selectBook = controller.selectAllPage(pageSelect);
+                                view.selectBook(selectBook);
+                                int pageNum = view.detailBookMenu(sc, pageSelect);
+                                if (pageNum == 1) {
+                                    pageSelect++;
+                                } else if (pageNum == 2) {
+                                    pageSelect--;
+                                } else {
+                                    break;
+                                }
+                            }
+                            break;
+                        case 2:        // 책 검색
                             int bookIfSelect = view.bookIfSelectMenu(sc);
                             if (bookIfSelect == 0) {
                                 break;
@@ -56,7 +67,7 @@ public class FrontController {
                             view.bookIfSelect(selectTitle);
 
                             continue;
-                        case 3 :        // 책 반납
+                        case 3:        // 책 반납
 
                             System.out.println("책 반납 미구현");
                             continue;

@@ -9,7 +9,10 @@ public class BookController {
 
     private BookService service = BookService.getInstance();
 
-    // BookVO 받아와서 서비스의 selectAll 리턴
+    // 메인 책 리스트에서 페이징 기법용
+    public List<BookVO> selectAllPage(int num) throws Exception {
+        return service.selectAllPage(num, 10);
+    }
     public List<BookVO> selectBook() throws Exception {
         return service.selectAll();
     }

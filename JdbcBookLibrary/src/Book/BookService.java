@@ -11,6 +11,7 @@ public class BookService {
     private BookDAO dao = BookDAO.getInstance();
 
     // 전체 검색
+    public List<BookVO> selectAllPage(int pageNum, int amount) throws Exception {return dao.selectAllPage(pageNum, amount);}
     public List<BookVO> selectAll() throws Exception {return dao.selectAll();}
     public List<BookVO> selectWord(String title, int num) throws Exception { return dao.selectWord(title, num);}
 
