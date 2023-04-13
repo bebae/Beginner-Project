@@ -35,13 +35,13 @@ public class BookView {
     public int bookUse(Scanner sc){
         StringBuilder sb = new StringBuilder();
         sb.append("─────────────────────────────────────────────────────────────────────────────────\n");
-        sb.append(" 1.책 목록 | 2.책 검색 | 3.책 반납 | 4.입고 | 5.수정 6.삭제 | 0. 메인화면으로\n");
+        sb.append(" 1.책 목록 | 2.책 검색 | 3.책 반납 | 4.입고 | 5.수정 | 6.삭제 | 0. 메인화면으로\n");
         sb.append("─────────────────────────────────────────────────────────────────────────────────\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
         assert sc != null;          // sc가 null 이라면 예외를 throw 하는 문법
         String input = sc.nextLine();
-        while(!input.matches("^[0-5]+$")) {
+        while(!input.matches("^[0-6]+$")) {
             System.out.println("잘못된 입력입니다.");
             System.out.print(sb);
             input = sc.nextLine();
@@ -195,7 +195,7 @@ public class BookView {
     public BookVO deleteBook(Scanner sc, List<BookVO> books){
         StringBuilder sb = new StringBuilder();
         sb.append("────────────────────────────────────────────────────────────────────\n");
-        sb.append("\t\t 수정할 책 선택 : ");
+        sb.append("\t\t 삭제할 책 선택 : ");
         System.out.println(sb);
         String num = sc.nextLine();
         while(!num.matches("^[1-9]+$")) {
@@ -203,8 +203,12 @@ public class BookView {
             System.out.print(sb);
             num = sc.nextLine();
         }
-        BookVO uBook = new BookVO();
-        uBook.setId(String.valueOf(books.get(Integer.parseInt(num))));
+        int index = Integer.parseInt(num) - 1; // 리스트 인덱스는 0부터 시작하므로 선택한 숫자에서 1을 빼줌
+
+
+        BookVO uBook = books.get(index);
+        System.out.println(uBook.getId() + "을(를) 삭제합니다.");
+
 
         return uBook;
     }

@@ -255,11 +255,13 @@ public class BookDAO {
         ResultSet rs = null;
         conn = getConnection();
 
-        StringBuilder sb = new StringBuilder();
+        System.out.println(vo.getId());
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("DELETE FROM book WHERE b_id = ?");
 
         pstmt = conn.prepareStatement(sb.toString());
-        sb.setLength(0);
+        pstmt.setString(1, vo.getId());
 
         int count = pstmt.executeUpdate();
         close(conn, pstmt);
