@@ -33,7 +33,7 @@ public class FrontController {
                 // 비회원
                 case 3:
 //                    BookVo loginMember = view.로그인(권한 없는 사용자);
-                    int bookcase = view.bookUse(sc, 0);
+                    int bookcase = view.bookUse(sc);
                     switch (bookcase) {
                         case 1 :        // 책 목록
                             List<BookVO> selectBook = controller.selectBook();
@@ -42,7 +42,7 @@ public class FrontController {
                         case 2 :        // 책 검색
                             int bookIfSelect = view.bookIfSelectMenu(sc);
                             if (bookIfSelect == 0) {
-
+                                break;
                             } else if (bookIfSelect == 1) {
                                 System.out.print("제목 입력 : ");
                             } else if (bookIfSelect == 2) {
@@ -56,8 +56,23 @@ public class FrontController {
                             view.bookIfSelect(selectTitle);
 
                             continue;
-                        case 3 :        // 책 입고, 책 반납
-                            System.out.println("책 입고 미구현");
+                        case 3 :        // 책 반납
+
+                            System.out.println("책 반납 미구현");
+                            continue;
+                        case 4:         // 책 입고
+                            BookVO iBook = view.insertBook(sc);
+                            System.out.println(iBook);
+                            if (iBook != null) {
+                                int insertBook = controller.insertBook(iBook);
+                                view.insertResult(insertBook);
+                            }
+                            continue;
+                        case 5:        // 책 수정
+                            BookVO uBook = view.updateBook(sc);
+
+                            continue;
+                        case 6:        // 책 삭제
                             continue;
                         case 0:
                             System.out.println("메인화면으로 돌아갑니다.");

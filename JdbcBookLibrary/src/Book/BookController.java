@@ -19,7 +19,7 @@ public class BookController {
         return service.selectWord(word, num);
     }
 
-    public BookVO insertBook(BookVO vo) throws Exception {
+    public int insertBook(BookVO vo) throws Exception {
         return service.insertBook(vo);
     }
 }

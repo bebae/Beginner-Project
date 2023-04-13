@@ -13,14 +13,13 @@ public class BookDAO {
     private static BookDAO instance = new BookDAO();
     public static BookDAO getInstance() {return instance;}
 
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
+    public Connection getConnection() throws Exception {
         Class.forName("oracle.jdbc.driver.OracleDriver");
-        //String url = "jdbc:oracle:thin:@localhost:1521:XE";
-        //String user = "pc030";
-        String url = "jdbc:oracle:thin:@192.168.142.23:1521:XE";
-        String user = "project";
-        String password = "java";
-        return DriverManager.getConnection(url, user, password);
+        String url = "jdbc:oracle:thin:@localhost:1521:XE";
+        String user = "pc030";
+        //String url = "jdbc:oracle:thin:@192.168.142.23:1521:1521:XE";
+//        String user = "project";
+        return DriverManager.getConnection(url, user, "java");
     }
 
     // 검색 워드
@@ -45,7 +44,8 @@ public class BookDAO {
             String loanYN = rs.getString("loan_YN");
             list.add(new BookVO(title, author, genre, callSing, year, loanYN));
         }
-        close(conn, stmt, rs);
+        rs.close();
+        close(conn, stmt);
         return list;
     }
     public List<BookVO> selectWord(String selectWord, int num) throws Exception {
@@ -68,6 +68,7 @@ public class BookDAO {
 
         assert pstmt != null;
         pstmt.setString(1, selectWord);
+        // executeQuery 는 Select 용
         rs = pstmt.executeQuery();
 
         List<BookVO> list = new ArrayList<>();
@@ -80,23 +81,42 @@ public class BookDAO {
             String loanYN = rs.getString("loan_YN");
             list.add(new BookVO(title, author, genre, callSing, year, loanYN));
         }
-        close(conn, pstmt, rs);
+        rs.close();
+        close(conn, pstmt);
         return list;
     }
 
-    public void close(Connection conn, Statement stmt, ResultSet rs) throws SQLException {
-        if (rs != null) {
-            rs.close();
-        }
-        if (stmt != null) {
-            stmt.close();
+
+    public int insertBook(BookVO vo) throws Exception {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        conn = getConnection();
+
+        pstmt = conn.prepareStatement(
+                "INSERT into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)" +
+                " values ( ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        );
+        pstmt.setString(1, vo.getTitle());
+        pstmt.setString(2, vo.getAuthor());
+        pstmt.setString(3, vo.getPublisher());
+        pstmt.setString(4, vo.getYear());
+        pstmt.setString(5, String.valueOf(vo.getIsbn()));
+        pstmt.setString(6, String.valueOf(vo.getPrice()));
+        pstmt.setString(7, vo.getGenre());
+        pstmt.setString(8, vo.getId());
+        pstmt.setString(9, vo.getCallSign());
+        int count = pstmt.executeUpdate();
+
+        close(conn, pstmt);
+        return count;
+    }
+    public void close(Connection conn, Statement pstmt) throws SQLException {
+        if (pstmt != null) {
+            pstmt.close();
         }
         if (conn != null) {
             conn.close();
         }
-    }
-
-    public BookVO insertBook(BookVO vo) throws Exception {
-        return null;
     }
 }

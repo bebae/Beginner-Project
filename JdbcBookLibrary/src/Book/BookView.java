@@ -5,13 +5,16 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class BookView {
-    private static BookView instance = new BookView();
+    private static final BookView instance = new BookView();
     public  BookView() {
     }
     public static BookView getInstance() {
         return instance;
     }
+    private final BookInsertRandom bookInsertRandom = BookInsertRandom.getInstance();
     public static Map<String, Object> login;
+
+
     public int mainMenu(Scanner sc) {
         StringBuilder sb = new StringBuilder();
         sb.append("────────────────────────────────────────────────\n");
@@ -29,16 +32,16 @@ public class BookView {
     }
     // 로그인 후 보일 목록
     // 책 검색 | 책 반납 / 책 검색 | 책 입고
-    public int bookUse(Scanner sc, int nonMember){
+    public int bookUse(Scanner sc){
         StringBuilder sb = new StringBuilder();
-        sb.append("─────────────────────────────────────────────────────────────────────\n");
-        sb.append(" 1. 책 목록 | 2. 책 검색 | 3. 책 반납 | 4. 책 입고 | 0. 메인화면으로\n");
-        sb.append("─────────────────────────────────────────────────────────────────────\n");
+        sb.append("─────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append(" 1. 책 목록 | 2. 책 검색 | 3. 책 반납 | 4. 입고 5. 수정 6. 삭제 | 0. 메인화면으로\n");
+        sb.append("─────────────────────────────────────────────────────────────────────────────────\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
         assert sc != null;          // sc가 null 이라면 예외를 throw 하는 문법
         String input = sc.nextLine();
-        while(!input.matches("^[0-3]+$")) {
+        while(!input.matches("^[0-5]+$")) {
             System.out.println("잘못된 입력입니다.");
             System.out.print(sb);
             input = sc.nextLine();
@@ -58,7 +61,6 @@ public class BookView {
         sb.append("───────────────────────────────────────────────────────\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
-        //assert sc != null;          // sc가 null 이라면 예외를 throw 하는 문법
         String input = sc.nextLine();
         while(!input.matches("^[0-5]+$")) {
             System.out.println("잘못된 입력입니다.");
@@ -70,31 +72,48 @@ public class BookView {
     }
     public void bookIfSelect(List<BookVO> books){
         // 쪽으로 나타내는 전체 리스트 나중에 추가 작업 필요
+        int i = 0;
         System.out.println(" 검색 목록");
         System.out.println("───────────────────────────────────────────────────────────────");
         for (BookVO vo: books) {
-            System.out.printf("%40s%20s%20s%15s%4s%15s%n", vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign(), vo.getYear(), vo.getLoanYN());
+            System.out.printf("%2d. %-30s\t%-9s\t%-7s\t%-9s\t%-4s\t%-3s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign(), vo.getYear(), vo.getLoanYN());
         }
         System.out.println("───────────────────────────────────────────────────────────────");
     }
 
     public void selectBook(List<BookVO> books){
         // 쪽으로 나타내는 전체 리스트 나중에 추가 작업 필요
+        int i = 0;
         System.out.println(" 전체 목록");
-        System.out.println("───────────────────────────────────────────────────────────────");
+        System.out.println("───────────────────────────────────────────────────────────────────────────────────────");
         for (BookVO vo: books) {
-            //System.out.println(vo);
-            System.out.printf("%-50s %-10s %-10s %-15s %-4s %-30s", vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign(), vo.getYear(), vo.getLoanYN());
+            System.out.printf("%2d. %-30s\t%-9s\t%-7s\t%-9s\t%-4s\t%-3s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign(), vo.getYear(), vo.getLoanYN());
         }
-        System.out.println("───────────────────────────────────────────────────────────────");
+        System.out.println("───────────────────────────────────────────────────────────────────────────────────────");
     }
-    public BookVO insertBook(Scanner sc){
-        return null;
-        //return new Book.BookVO(title, author, publisher, publicationYear, isbn, price, genre, 등록번호, 청구기호);
+
+    public void detailBook(List<BookVO> books){
+
+    }
+
+    public BookVO insertBook(Scanner sc) throws Exception {
+        System.out.println("책 입고 정보를 입력합니다.");
+        String title = BookInsertRandom.inputLimit("제목 : ", 50);
+        String author = BookInsertRandom.inputLimit("저자 : ", 15);
+        String genre = BookInsertRandom.inputLimit("장르 : ", 15);
+        String publisher = BookInsertRandom.inputLimit("출판사 : ", 10);
+        String year = BookInsertRandom.inputLimit("발행연도 : ",4,true);
+        String price = BookInsertRandom.inputLimit("가격(원) : ",10,false);
+        String key = bookInsertRandom.generateKey();
+        String call = bookInsertRandom.generateRandomCallString(Integer.parseInt(year));
+        String isbn_num = bookInsertRandom.generateISBN();
+        return new BookVO(title, author, genre, publisher, year, price, key, call, isbn_num);
     }
     public BookVO updateBook(Scanner sc){
         System.out.print("수정할 번호 입력 :");
         int no = Integer.parseInt(sc.nextLine());
+
+
         return new BookVO();
     }
     public void updateResult(int count){
@@ -102,6 +121,15 @@ public class BookView {
             System.out.println("정상적으로 삭제되었습니다.");
         } else {
             System.out.println("정상적으로 삭제되지 않았습니다.");
+        }
+    }
+
+    public void insertResult(int count) {
+        if (count > 0) {
+            System.out.println("책이 정상적으로 입고 되었습니다.");
+            System.out.println();
+        } else {
+            System.out.println("책이 정상적으로 입고 되지 않았습니다.");
         }
     }
 }

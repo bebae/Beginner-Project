@@ -14,7 +14,7 @@ public class BookService {
     public List<BookVO> selectAll() throws Exception {return dao.selectAll();}
     public List<BookVO> selectWord(String title, int num) throws Exception { return dao.selectWord(title, num);}
 
-    public BookVO insertBook(BookVO vo) throws Exception {
+    public int insertBook(BookVO vo) throws Exception {
         return dao.insertBook(vo);
     }
 }

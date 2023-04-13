@@ -100,6 +100,7 @@ ALTER TABLE loan ADD (
 );
 
 DELETE FROM book;
+select * from book;
 
 -- book 테이블 제목, 지은이, 출판사, 발행연도, ISBN, 가격, 주제(장르), 등록번호, 청구기호 
 INSERT
