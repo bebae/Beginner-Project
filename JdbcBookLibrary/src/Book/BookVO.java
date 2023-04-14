@@ -16,7 +16,8 @@ public class BookVO {
     public BookVO() {
     }
     // 책 목록
-    public BookVO(String title, String author, String genre, String callSign, String year, String loanYN) {
+    public BookVO(String id, String title, String author, String genre, String callSign, String year, String loanYN) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.genre = genre;
@@ -114,7 +115,7 @@ public class BookVO {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(" | ");
-        if (id != null) sb.append(id).append(" | ");
+//        if (id != null) sb.append(id).append(" | ");
         if (title != null) sb.append(title).append(" | ");
         if (author != null) sb.append(author).append(" | ");
         if (genre != null) sb.append(genre).append(" | ");

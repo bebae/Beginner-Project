@@ -30,7 +30,7 @@ public class FrontController {
                 case 2:
 //                    Book.BookVO joinMember = view.회원가입(scanner)
                     System.out.println("회원가입 미구현");
-                    break;
+                    continue;
                 // 비회원
                 case 3:
 //                    BookVo loginMember = view.로그인(권한 없는 사용자);

@@ -56,13 +56,14 @@ public class BookDAO {
 
         List<BookVO> list = new ArrayList<>();
         while (rs.next()) {
+            String id = rs.getString("b_id");
             String title = rs.getString("title");
             String author = rs.getString("author");
             String genre = rs.getString("genre");
             String callSing = rs.getString("callsign_num");
             String year = Integer.toString(rs.getInt("PUBLICATION_YEAR"));
             String loanYN = rs.getString("loan_YN");
-            list.add(new BookVO(title, author, genre, callSing, year, loanYN));
+            list.add(new BookVO(id, title, author, genre, callSing, year, loanYN));
         }
         rs.close();
         close(conn, pstmt);
@@ -85,13 +86,14 @@ public class BookDAO {
 
         List<BookVO> list = new ArrayList<>();
         while (rs.next()) {
+            String id = rs.getString("b_id");
             String title = rs.getString("title");
             String author = rs.getString("author");
             String genre = rs.getString("genre");
             String callSing = rs.getString("callsign_num");
             String year = Integer.toString(rs.getInt("PUBLICATION_YEAR"));
             String loanYN = rs.getString("loan_YN");
-            list.add(new BookVO(title, author, genre, callSing, year, loanYN));
+            list.add(new BookVO(id, title, author, genre, callSing, year, loanYN));
         }
         rs.close();
         close(conn, pstmt);
@@ -122,13 +124,14 @@ public class BookDAO {
 
         List<BookVO> list = new ArrayList<>();
         while (rs.next()) {
+            String id = rs.getString("b_id");
             String title = rs.getString("title");
             String author = rs.getString("author");
             String genre = rs.getString("genre");
             String callSing = rs.getString("callsign_num");
             String year = Integer.toString(rs.getInt("PUBLICATION_YEAR"));
             String loanYN = rs.getString("loan_YN");
-            list.add(new BookVO(title, author, genre, callSing, year, loanYN));
+            list.add(new BookVO(id, title, author, genre, callSing, year, loanYN));
         }
         rs.close();
         close(conn, pstmt);
@@ -241,7 +244,6 @@ public class BookDAO {
 
 
         sb.append("수정부분입니다.\n");
-        sb.append(vo.getId()).append(vo.getTitle()).append(vo.getAuthor()).append(vo.getPublisher()).append(vo.getGenre());
         System.out.println(sb);
 
         int count = pstmt.executeUpdate();
@@ -254,8 +256,6 @@ public class BookDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         conn = getConnection();
-
-        System.out.println(vo.getId());
 
         StringBuilder sb = new StringBuilder();
         sb.append("DELETE FROM book WHERE b_id = ?");

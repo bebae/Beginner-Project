@@ -36,12 +36,14 @@ ALTER TABLE loan ADD CONSTRAINT xpk대출 PRIMARY KEY ( l_number );
 CREATE TABLE member (
     m_id       CHAR(8) NOT NULL,
     name       VARCHAR2(50) NOT NULL,
+    password VARCHAR2(20) NOT NULL, --비밀번호
     birth_date DATE NOT NULL,
     phone_num  VARCHAR2(14) NOT NULL,
     email      VARCHAR2(50) NOT NULL,
     address    VARCHAR2(120) NOT NULL,
     loans_num  NUMBER NULL
 );
+
 CREATE UNIQUE INDEX xpk회원 ON
     member (
         m_id
@@ -98,10 +100,52 @@ ALTER TABLE loan ADD (
     CONSTRAINT r_1 FOREIGN KEY ( m_id )
         REFERENCES member ( m_id )
 );
+-- 대출 시퀸스 및 트리거
+CREATE SEQUENCE loan_seq
+    INCREMENT BY 1
+    START WITH 1
+    MAXVALUE 999
+CYCLE 
+    NOCACHE 
+    NOORDER;
+
+CREATE OR REPLACE TRIGGER loan_trigger
+    BEFORE INSERT ON loan
+    FOR EACH ROW
+BEGIN
+    SELECT TO_CHAR(SYSDATE, 'YYMMDDHH') || LPAD(loan_seq.NEXTVAL, 3, '0')
+    INTO :new.L_NUMBER
+    FROM dual;
+    
+    :NEW.loan_date := SYSDATE;
+    :NEW.ex_return_date := SYSDATE + 7;
+END;
+/
+
+INSERT into LOAN (m_id, b_id, ex_return_date)
+	VALUES ('rudwls1','SE0000648797');
 
 DELETE FROM book;
 select * from book;
 
+
+--member 테이블 회원ID, 이름, 비밀번호, 생년월일, 연락처, 이메일, 주소, 대출권수
+INSERT
+    into member(m_id, name, password, birth_date, phone_num, email, address, loans_num)
+    values ('rudwls1', '이설이', 'Aabcd123!', '990611', '010-1234-5678', 'rudwlsaa@naver.com', '대전 중구 선화동 523-2', 2);
+INSERT
+    into member(m_id, name, password, birth_date, phone_num, email, address, loans_num)
+    values ('minjun1', '김민준', 'Aabcdef75', '000725', '010-4567-5823', 'jinja@gamil.com', '대전 서구 갈마동 302-5', 5);
+INSERT
+    into member(m_id, name, password, birth_date, phone_num, email, address, loans_num)
+    values ('jinwoo5', '최진우', 'Bdjkl123!', '981212', '010-5691-2856', 'jinwoo3@naver.com', '대전 동구 낭월동 123-12', 3);
+INSERT
+    into member(m_id, name, password, birth_date, phone_num, email, address, loans_num)
+    values ('dongjin2', '이동진', 'Ekdos45*', '010823', '010-5896-4794', 'dongjin45@gamil.com', '대전 중구 은행동 125-8', 2);
+INSERT
+    into member(m_id, name, password, birth_date, phone_num, email, address, loans_num)
+    values ('seoyean2', '민서연', 'Homeonly12', '990611', '010-1234-5678', 'rudwlsaa@naver.com', '대전 중구 선화동 523-2', 2);
+    
 -- book 테이블 제목, 지은이, 출판사, 발행연도, ISBN, 가격, 주제(장르), 등록번호, 청구기호 
 INSERT
     into book(title, author, p_name, publication_year, isbn_num, price, genre, b_id, callsign_num)

@@ -17,9 +17,9 @@ public class BookView {
 
     public int mainMenu(Scanner sc) {
         StringBuilder sb = new StringBuilder();
-        sb.append("────────────────────────────────────────────────\n");
-        sb.append(" 1. 로그인 | 2. 회원가입 | 3. 비회원 | 0. 종료\n");
-        sb.append("────────────────────────────────────────────────\n");
+        sb.append("┌───────────────────────────────────────────────┐\n");
+        sb.append("│ 1. 로그인 │ 2. 회원가입 │ 3. 비회원 │ 0. 종료 │\n");
+        sb.append("└───────────────────────────────────────────────┘\n");
         sb.append("메뉴를 선택 > ");
         System.out.print(sb);
         String input = sc.nextLine();
@@ -34,9 +34,9 @@ public class BookView {
     // 책 검색 | 책 반납 / 책 검색 | 책 입고
     public int bookUse(Scanner sc){
         StringBuilder sb = new StringBuilder();
-        sb.append("─────────────────────────────────────────────────────────────────────────────────\n");
-        sb.append(" 1.책 목록 | 2.책 검색 | 3.책 반납 | 4.입고 | 5.수정 | 6.삭제 | 0. 메인화면으로\n");
-        sb.append("─────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append("┌────────────────────────────────────────────────────────────────────────────────┐\n");
+        sb.append("│ 1.책 목록 │ 2.책 검색 │ 3.책 반납 │ 4.입고 │ 5.수정 │ 6.삭제 │ 0. 메인화면으로 │\n");
+        sb.append("└────────────────────────────────────────────────────────────────────────────────┘\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
         assert sc != null;          // sc가 null 이라면 예외를 throw 하는 문법
@@ -52,13 +52,13 @@ public class BookView {
 
     public int bookIfSelectMenu(Scanner sc){
         StringBuilder sb = new StringBuilder();
-        sb.append("───────────────────────────────────────────────────────\n");
-        sb.append(" 1. 제목으로 검색\n");
-        sb.append(" 2. 작가로 검색\n");
-        sb.append(" 3. 장르로 검색\n");
-        sb.append(" 4. 출판년도로 검색\n");
-        sb.append(" 0. 검색취소 \n");
-        sb.append("───────────────────────────────────────────────────────\n");
+        sb.append("┌────────────────────┐\n");
+        sb.append("│ 1. 제목으로 검색   │\n");
+        sb.append("│ 2. 작가로 검색     │\n");
+        sb.append("│ 3. 장르로 검색     │\n");
+        sb.append("│ 4. 출판년도로 검색 │\n");
+        sb.append("│ 0. 검색취소        │\n");
+        sb.append("└────────────────────┘\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
         String input = sc.nextLine();
@@ -74,32 +74,32 @@ public class BookView {
         StringBuilder sb = new StringBuilder();
         int i = 0;
         System.out.println(" 검색 목록");
-        System.out.println("───────────────────────────────────────────────────────────────");
+        System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         for (BookVO vo: books) {
-            System.out.printf("%2d. %-30s\t%-9s\t%-7s\t%-9s\t%-4s\t%-3s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign(), vo.getYear(), vo.getLoanYN());
+            System.out.printf(" %2d. %-50s\t%-5s\t%-10s\t%-9s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign());
         }
-        System.out.println("───────────────────────────────────────────────────────────────");
+        System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
     }
 
     public void selectBook(List<BookVO> books){
         StringBuilder sb = new StringBuilder();
         int i = 0;
         System.out.println(" 목록");
-        System.out.println("───────────────────────────────────────────────────────────────────────────────────────");
+        System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         for (BookVO vo: books) {
-            System.out.printf("%2d. %-30s\t%-9s\t%-7s\t%-9s\t%-4s\t%-3s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign(), vo.getYear(), vo.getLoanYN());
+            System.out.printf(" %2d. %-50s\t%-5s\t%-10s\t%-9s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign());
         }
-        System.out.println("───────────────────────────────────────────────────────────────────────────────────────");
+        System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
     }
 
     // 페이징 기법 메뉴창
     public int detailBookMenu(Scanner sc, int pageNum){
         StringBuilder sb = new StringBuilder();
-        sb.append("────────────────────────────────────────────────────────────────────\n");
+        sb.append("┌────────────────────────────────────────────────────────────┐\n");
         sb.append("│ 현재 쪽:");
         sb.append(pageNum);
         sb.append(" │ 1.다음 페이지 │ 2.이전 페이지 │ 0. 목록 나가기 │\n");
-        sb.append("───────────────────────────────────────────────────────────────────\n");
+        sb.append("└────────────────────────────────────────────────────────────┘\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
         String input = sc.nextLine();
@@ -158,9 +158,13 @@ public class BookView {
             System.out.print(sb);
             input = sc.nextLine();
         }
+        int index = Integer.parseInt(num) - 1; // 리스트 인덱스는 0부터 시작하므로 선택한 숫자에서 1을 빼줌
 
-        BookVO uBook = new BookVO();
-        uBook.setId(String.valueOf(books.get(Integer.parseInt(num))));
+
+        BookVO uBook = books.get(index);
+        uBook.setId(books.get(index).getId());
+        System.out.println(uBook.getId() + "을(를) 수정합니다.");
+
         switch (input) {
             case "1":
                 title = BookInsertRandom.inputLimit("제목 : ", 50);
@@ -207,6 +211,7 @@ public class BookView {
 
 
         BookVO uBook = books.get(index);
+        uBook.setId(books.get(index).getId());
         System.out.println(uBook.getId() + "을(를) 삭제합니다.");
 
 
