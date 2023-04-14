@@ -1,16 +1,9 @@
 package Join;
 
-import java.sql.Connection;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class JoinView {
-	public static void main(String[] args) throws Exception {
-		JoinView view = new JoinView();
-		view.printJoins1(null);
-	}
 	public void printJoins1(List<JoinVO> list) throws Exception {
 
 		JoinDAO joinDAO = JoinDAO.getInstance1();
