@@ -96,16 +96,17 @@ public class FrontController {
 
                     BookVO lBook = view.loanBook(sc,selectBook);                      // 대출 뷰
                     if (lBook != null) {
-                        int loanBook = controller.loanBook(lBook);                  // 대출 확인 여부 DAO까지
-                        view.updateResult(loanBook);
+                        int loanBook = controller.loanBook(lBook, loginId);                  // 대출 확인 여부 DAO까지
+                        view.loanResult(loanBook);
                     } else {
                         System.out.println(" 수정을 취소합니다.");
                     }
                     continue;
                 case 4:        // 책 반납
+                    Map<String, String> resultMap =  controller.idSelectReturn(loginId);   // 반납 목록      // 대출테이블 참고해서 id에 맞는 책 제목과 반납 예정일 리턴하는 List DAO
+                    view.returnBook(sc, loginId, resultMap);      // 반납 뷰
+                                // 책 반납 처리 DAO
 
-                    Map<String, String> resultMap =  controller.idSelectReturn(loginId);         // 대출테이블 참고해서 id에 맞는 책 제목과 반납 예정일 리턴하는 List DAO
-                    view.returnBook(loginId, resultMap);      // 반납 뷰
                     continue;
                 case 5:         // 책 입고
                     BookVO iBook = view.insertBook();

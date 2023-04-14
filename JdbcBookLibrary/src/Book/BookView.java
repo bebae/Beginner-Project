@@ -278,30 +278,67 @@ public class BookView {
         }
     }
 
-    public void returnBook(String loginId, Map<String, String> resultMap) {
+    public void returnBook(Scanner sc, String loginId, Map<String, String> resultMap) {
+        int i=0;
         StringBuilder sb = new StringBuilder();
-        sb.append("\t").append(loginId).append("님의 대출 현황 입니다.\n");
+        sb.append("\t\t").append(loginId).append("님의 대출 현황 입니다.\n");
         sb.append("──────────────────────────────────────────────────\n");
         for (Map.Entry<String, String> entry : resultMap.entrySet()) {
-            sb.append("\t").append(entry.getKey()).append("\t").append(entry.getValue()).append("\n");
+            sb.append("  ").append(++i).append(".\t").append(entry.getKey()).append("\t").append(entry.getValue()).append("\n");
         }
-        System.out.println(sb);
-    }
-
-    public BookVO loanBook(Scanner sc, List<BookVO> selectBook) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
-        sb.append("\t\t 대출할 책 선택 : ");
-        System.out.println(sb);
+        sb.append("──────────────────────────────────────────────────\n");
+        sb.append(" 반납할 책 선택 : ");
+        System.out.print(sb);
         String num = sc.nextLine();
         while(!num.matches("^[1-9]+$")) {
             System.out.println("잘못된 입력입니다.");
             System.out.print(sb);
             num = sc.nextLine();
         }
-        sb.setLength(0);
+        switch(num) {
+            case "1":
+                System.out.println(resultMap.entrySet().iterator().next().getKey());
+                break;
+            case "2":
+                System.out.println(resultMap.entrySet().toArray()[1]);
+                break;
+            case "3":
+                System.out.println(resultMap.entrySet().toArray()[2]);
+                break;
+            case "4":
+                System.out.println(resultMap.entrySet().toArray()[3]);
+                break;
+            case "5":
+                System.out.println(resultMap.entrySet().toArray()[4]);
+                break;
+            default:
+                break;
+        }
+    }
 
-        return new BookVO();
+    public BookVO loanBook(Scanner sc, List<BookVO> selectBook) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append(" 대출할 책 선택 : ");
+        System.out.print(sb);
+        String num = sc.nextLine();
+        while(!num.matches("^[1-9]+$")) {
+            System.out.println("잘못된 입력입니다.");
+            System.out.print(sb);
+            num = sc.nextLine();
+        }
+        BookVO lBook = selectBook.get(Integer.parseInt(num)-1);
+
+        sb.setLength(0);
+        return lBook;
+    }
+
+    public void loanResult(int loanBook) {
+        if (loanBook > 0) {
+            System.out.println("정상적으로 대출되었습니다.");
+        } else {
+            System.out.println("정상적으로 대출되지 않았습니다.");
+        }
     }
 }
 

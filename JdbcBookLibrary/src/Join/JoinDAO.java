@@ -15,20 +15,9 @@ public class JoinDAO {
 
     public Connection getConnection() throws Exception {
         Class.forName("oracle.jdbc.driver.OracleDriver");
-        //String url = "jdbc:oracle:thin:@localhost:1521:XE";
-        //String user = "pc030";
         String url = "jdbc:oracle:thin:@192.168.142.23:1521:XE";
         String user = "project";
         return DriverManager.getConnection(url, user, "java");
-    }
-
-    public void close(Connection conn, Statement pstmt) throws SQLException {
-        if (pstmt != null) {
-            pstmt.close();
-        }
-        if (conn != null) {
-            conn.close();
-        }
     }
 
     public List<JoinVO> getJoins() throws Exception {
@@ -158,7 +147,6 @@ public class JoinDAO {
         final String USER = "project";
         final String PASS = "java";
 
-        JoinDAO joinDAO = new JoinDAO(); // JoinDAO 객체 생성
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -193,7 +181,6 @@ public class JoinDAO {
 
 
     public List<JoinVO> selectAllJoin() {
-        final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
         final String DB_URL = "jdbc:oracle:thin:@192.168.142.23:1521:xe";
         final String USER = "project";
         final String PASS = "java";

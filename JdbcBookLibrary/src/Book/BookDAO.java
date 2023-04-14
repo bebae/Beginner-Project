@@ -303,17 +303,25 @@ public class BookDAO {
     }
 
     // 대출
-    public int loanBook(BookVO vo) throws Exception {
+    public int loanBook(BookVO vo, String loginId) throws Exception {
         conn = getConnection();
 
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT into loan (m_id, b_id) ");
         sb.append("VALUES(?, ?) ");
-        pstmt.setString(1,"");
-        pstmt.setString(2,"");
+        pstmt = conn.prepareStatement(String.valueOf(sb));
 
+        pstmt.setString(1, loginId);
+        pstmt.setString(2, vo.getId());
 
-        int count = 0;
+        sb.setLength(0);
+        sb.append(loginId);
+        sb.append("님께서 「");
+        sb.append(vo.getTitle());
+        sb.append("」 을 대출하셨습니다.");
+
+        int count = pstmt.executeUpdate();
+        close(conn, pstmt);
         return count;
     }
 }

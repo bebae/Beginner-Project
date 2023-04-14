@@ -39,7 +39,7 @@ public class BookController {
         return service.idSelectReturn(loginId);
     }
 
-    public int loanBook(BookVO vo) throws Exception {
-        return service.loanBokk(vo);
+    public int loanBook(BookVO vo, String loginId) throws Exception {
+        return service.loanBook(vo, loginId);
     }
 }

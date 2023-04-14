@@ -31,7 +31,7 @@ public class BookService {
         return dao.idSelectReturn(loginId);
     }
 
-    public int loanBokk(BookVO vo) throws Exception {
-        return dao.loanBook(vo);
+    public int loanBook(BookVO vo, String loginId) throws Exception {
+        return dao.loanBook(vo, loginId);
     }
 }
