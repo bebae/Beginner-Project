@@ -1,8 +1,8 @@
 package Sign;
 
 public class SignApplication {
-   public static void main(String[] args) throws Exception {
-  	 SignController controller = new SignController();
-  	 controller.getSigns();
-	} 
+    public static void main(String[] args) throws Exception {
+        //SignController signControllerController = new SignController();
+        //signControllerController.getSigns();
+    }
 }

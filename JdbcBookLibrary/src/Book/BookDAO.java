@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDAO {
-    private Connection connection;
-    private Statement statement;
+    private Connection conn;
+    private PreparedStatement pstmt;
 
     public BookDAO() {
     }
@@ -32,9 +32,7 @@ public class BookDAO {
 
     // 검색 워드
     public List<BookVO> selectAllPage(int pageNum, int amount) throws Exception {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        ResultSet rs;
         conn = getConnection();
 
         // 조회할 페이지 번호와 한 페이지당 데이터 수를 기반으로 시작 번호와 끝 번호를 계산합니다.
@@ -70,8 +68,6 @@ public class BookDAO {
         return list;
     }
     public List<BookVO> selectAll() throws Exception {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
         ResultSet rs = null;
         conn = getConnection();
 
@@ -100,8 +96,6 @@ public class BookDAO {
         return list;
     }
     public List<BookVO> selectWord(String selectWord, int num) throws Exception {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         conn = getConnection();
@@ -139,9 +133,6 @@ public class BookDAO {
     }
 
     public int insertBook(BookVO vo) throws Exception {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
         conn = getConnection();
 
         pstmt = conn.prepareStatement(
@@ -165,9 +156,6 @@ public class BookDAO {
 
 
     public int updateBook(BookVO vo) throws Exception {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
         conn = getConnection();
 
         StringBuilder sb = new StringBuilder();
@@ -252,9 +240,6 @@ public class BookDAO {
     }
 
     public int deleteBook(BookVO vo) throws Exception {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
         conn = getConnection();
 
         StringBuilder sb = new StringBuilder();

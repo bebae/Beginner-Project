@@ -1,6 +1,8 @@
 import Book.BookController;
 import Book.BookVO;
 import Book.BookView;
+import Join.JoinController;
+import Sign.SignController;
 
 import java.util.List;
 import java.util.Scanner;
@@ -23,13 +25,15 @@ public class FrontController {
             switch (menu) {
                 // 로그인
                 case 1:
-//                    BookVo loginMember = view.로그인(scanner);
-                    System.out.println("로그인 미구현");
+                    SignController signControllerController = new SignController();
+                    signControllerController.getSigns();
+
                     break;
                 // 회원가입
                 case 2:
+                    JoinController joinController = new JoinController();
+                    joinController.getJoins();
 //                    Book.BookVO joinMember = view.회원가입(scanner)
-                    System.out.println("회원가입 미구현");
                     continue;
                 // 비회원
                 case 3:
