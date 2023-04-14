@@ -9,6 +9,8 @@ public class SignVO {
         this.password = password;
     }
 
+    public SignVO() {}
+
     public String getId() {
         return id;
     }

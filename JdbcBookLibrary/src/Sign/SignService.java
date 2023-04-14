@@ -26,7 +26,6 @@ public class SignService {
     }
 
     public static SignService getInstance() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

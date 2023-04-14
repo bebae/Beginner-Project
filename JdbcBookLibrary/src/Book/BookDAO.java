@@ -2,7 +2,9 @@ package Book;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BookDAO {
     private Connection conn;
@@ -63,6 +65,7 @@ public class BookDAO {
             String loanYN = rs.getString("loan_YN");
             list.add(new BookVO(id, title, author, genre, callSing, year, loanYN));
         }
+        sb.setLength(0);
         rs.close();
         close(conn, pstmt);
         return list;
@@ -91,6 +94,7 @@ public class BookDAO {
             String loanYN = rs.getString("loan_YN");
             list.add(new BookVO(id, title, author, genre, callSing, year, loanYN));
         }
+        sb.setLength(0);
         rs.close();
         close(conn, pstmt);
         return list;
@@ -249,20 +253,24 @@ public class BookDAO {
         pstmt.setString(1, vo.getId());
 
         int count = pstmt.executeUpdate();
+        sb.setLength(0);
         close(conn, pstmt);
         return count;
     }
 
-    public void idSelectReturn() throws Exception {
+    public Map<String, String> idSelectReturn(String loginId) throws Exception {
+
         conn = getConnection();
+
+        Map<String, String> resultMap = new HashMap<>();
 
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT");
         sb.append("    b.title,");
-        sb.append("    l.ex_return_date");
+        sb.append("    l.ex_return_date ");
         sb.append("FROM");
         sb.append("         loan l");
-        sb.append("    JOIN book b ON l.b_id = b.b_id");
+        sb.append("    JOIN book b ON l.b_id = b.b_id ");
         sb.append("WHERE");
         sb.append("    l.m_id = (");
         sb.append("        SELECT");
@@ -270,10 +278,26 @@ public class BookDAO {
         sb.append("        FROM");
         sb.append("            member");
         sb.append("        WHERE");
-        sb.append("            m_id = 'chopper'");
-        sb.append("    );");
+        sb.append("            m_id = ?");
+        sb.append("    )");
         pstmt = conn.prepareStatement(String.valueOf(sb));
+        pstmt.setString(1, loginId);
+        ResultSet rs = pstmt.executeQuery();
 
+        if(rs.next()) {
+            String title = rs.getString("title");
+            String returnDate = rs.getString("ex_return_date");
+            resultMap.put(title, returnDate);
+
+            System.out.println(title+" : "+returnDate);
+        } else {
+            System.out.println("rs는 null 입니다.");
+        }
+
+        sb.setLength(0);
+        rs.close();
+        close(conn, pstmt);
+        return resultMap;
     }
 }
 

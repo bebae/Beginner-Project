@@ -103,7 +103,7 @@ public class SignDAO {
             return true;
         } else { // 아이디가 틀린 경우
             close(conn, pstmt);
-            System.out.println("로그인 실패! 아이디 또는 비밀번호가 일치하지 않습니다. 다시 입력 해주세요.");
+            System.out.println("로그인 실패! 아이디 또는 비밀번호가 일치하지 않습니다. 다시 시도해주세요.");
             return false;
         }
     }

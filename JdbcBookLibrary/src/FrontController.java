@@ -5,6 +5,7 @@ import Join.JoinController;
 import Sign.SignController;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class FrontController {
@@ -22,13 +23,16 @@ public class FrontController {
             // View에 선택창 불러오는 부분
             int menu = view.mainMenu(sc);
             int pageSelect = 1;         // 페이지 기본값
+            String loginId = "";
             switch (menu) {
                 // 로그인
                 case 1:
                     SignController signControllerController = new SignController();
-                    int loginCheck = signControllerController.getSigns();
-                    //signControllerController.getSigns(admin);
-                    innerMenu(pageSelect, loginCheck);
+                    loginId = signControllerController.getSigns();
+                    if (loginId == null) {
+                        continue;
+                    }
+                    innerMenu(pageSelect, loginId);
                     break;
                 // 회원가입
                 case 2:
@@ -38,7 +42,8 @@ public class FrontController {
                     continue;
                 // 비회원
                 case 3:
-                    innerMenu(pageSelect, 0);
+                    loginId = null;
+                    innerMenu(pageSelect, loginId);
                     break;
                 case 0:
                     System.out.println("프로그램을 종료합니다.");
@@ -47,11 +52,11 @@ public class FrontController {
             }
         }
     }
-    public void innerMenu(int pageSelect, int loginCheck) throws Exception {
+    public void innerMenu(int pageSelect, String loginId) throws Exception {
         //                    BookVo loginMember = view.로그인(권한 없는 사용자);
         boolean run = true;
         while (run) {
-            int bookcase = view.bookUse(sc, loginCheck);
+            int bookcase = view.bookUse(sc, loginId);
             List<BookVO> selectBook;
             switch (bookcase) {
                 case 1:        // 책 목록 페이징
@@ -74,42 +79,47 @@ public class FrontController {
                     if (bookIfSelect == 0) {
                         break;
                     } else if (bookIfSelect == 1) {
-                        System.out.print("제목 입력 : ");
+                        System.out.print(" 제목 입력 : ");
                     } else if (bookIfSelect == 2) {
-                        System.out.print("저자 입력 : ");
+                        System.out.print(" 저자 입력 : ");
                     } else if (bookIfSelect == 3) {
-                        System.out.print("장르 입력 : ");
+                        System.out.print(" 장르 입력 : ");
                     } else if (bookIfSelect == 4) {
-                        System.out.print("출판년도 입력 : ");
+                        System.out.print(" 출판년도 입력 : ");
                     }
                     List<BookVO> selectTitle = controller.selectWord(sc.nextLine(),bookIfSelect);
                     view.bookIfSelect(selectTitle);
+                    continue;
+                case 3:        // 책 대출
 
                     continue;
-                case 3:        // 책 반납
-                    controller.idSelectReturn();         // 대출테이블 참고해서 id에 맞는 책 제목과 반납 예정일 리턴하는 List DAO
-                    view.returnBook();      // 반납 뷰
+                case 4:        // 책 반납
 
-                    System.out.println("책 반납 미구현");
+                    Map<String, String> resultMap =  controller.idSelectReturn(loginId);         // 대출테이블 참고해서 id에 맞는 책 제목과 반납 예정일 리턴하는 List DAO
+                    view.returnBook(loginId, resultMap);      // 반납 뷰
                     continue;
-                case 4:         // 책 입고
-                    BookVO iBook = view.insertBook(sc);
+                case 5:         // 책 입고
+                    BookVO iBook = view.insertBook();
                     System.out.println(iBook);
                     if (iBook != null) {
                         int insertBook = controller.insertBook(iBook);
                         view.insertResult(insertBook);
                     }
                     continue;
-                case 5:        // 책 수정
+                case 6:        // 책 수정
                     selectBook = controller.selectBook();
                     view.selectBook(selectBook);
 
                     BookVO uBook = view.updateBook(sc,selectBook);                      // 수정할 항목
-                    int updateBook = controller.updateBook(uBook);                      // 수정 확인 여부
-                    view.updateResult(updateBook);
+                    if (uBook != null) {
+                        int updateBook = controller.updateBook(uBook);                      // 수정 확인 여부
+                        view.updateResult(updateBook);
+                    } else {
+                        System.out.println(" 수정을 취소합니다.");
+                    }
 
                     continue;
-                case 6:        // 책 삭제
+                case 7:        // 책 삭제
                     selectBook = controller.selectBook();
                     view.selectBook(selectBook);
 
@@ -117,7 +127,7 @@ public class FrontController {
                     int deleteBook = controller.deleteBook(dBook);
                     continue;
                 default:
-                    System.out.println("메인화면으로 돌아갑니다.");
+                    System.out.println(" 메인화면으로 돌아갑니다.");
                     run = false;
                     break;
             }

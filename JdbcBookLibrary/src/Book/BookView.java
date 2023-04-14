@@ -12,8 +12,6 @@ public class BookView {
         return instance;
     }
     private final BookInsertRandom bookInsertRandom = BookInsertRandom.getInstance();
-    public static Map<String, Object> login;
-
 
     public int mainMenu(Scanner sc) {
         StringBuilder sb = new StringBuilder();
@@ -32,20 +30,61 @@ public class BookView {
     }
     // 로그인 후 보일 목록
     // 책 검색 | 책 반납 / 책 검색 | 책 입고
-    public int bookUse(Scanner sc, int loginCheck){
+    public int bookUse(Scanner sc, String loginId){
         StringBuilder sb = new StringBuilder();
-        sb.append("┌────────────────────────────────────────────────────────────────────────────────┐\n");
-        sb.append("│ 1.책 목록 │ 2.책 검색 │ 3.책 반납 │ 4.입고 │ 5.수정 │ 6.삭제 │ 0. 메인화면으로 │\n");
-        sb.append("└────────────────────────────────────────────────────────────────────────────────┘\n");
+        sb.append("┌──────────────────────────────────");
+        if (loginId == null) {                  // 비회원
+            sb.append( "──────");
+        } else if ("admin".equals(loginId)) {   // 관리자
+            sb.append("──────────────────────────────────────────");
+        } else {                                // 회원
+            sb.append("──────────────────────────────");
+        }
+        sb.append("┐\n");
+        sb.append("│ 1.책 목록 │");
+        sb.append( " 2.책 검색 │");
+        if (loginId != null && !"admin".equals(loginId)) {
+            sb.append(" 3.책 대출 │");
+            sb.append(" 4.책 반납 │");
+        }
+        if ("admin".equals(loginId)) {
+            sb.append( " 5.책 입고 │");
+            sb.append( " 6.책 수정 │");
+            sb.append( " 7.책 삭제 │");
+        }
+        sb.append( " 0.메인화면으로 │\n");
+        sb.append("└──────────────────────────────────");
+        if (loginId == null) {                  // 비회원
+            sb.append( "──────");
+        } else if ("admin".equals(loginId)) {   // 관리자
+            sb.append("──────────────────────────────────────────");
+        } else {                                // 회원
+            sb.append("──────────────────────────────");
+        }
+        sb.append("┘\n");
         sb.append("번호 선택 > ");
         System.out.print(sb);
-        assert sc != null;          // sc가 null 이라면 예외를 throw 하는 문법
-        String input = sc.nextLine();
-        while(!input.matches("^[0-6]+$")) {
-            System.out.println("잘못된 입력입니다.");
-            System.out.print(sb);
+
+        boolean userInsertCheck;
+        String input;
+
+        do {
             input = sc.nextLine();
-        }
+            if (loginId == null) {                  // 비회원
+                userInsertCheck = !input.matches("^[0-2]+$");
+            } else if ("admin".equals(loginId)) {   // 관리자
+                userInsertCheck = !input.matches("^[012567]+$");
+            } else {                                // 회원
+                System.out.println("user 입력값 체크");
+                userInsertCheck = !input.matches("^[0-4]+$");
+            }
+
+            if (userInsertCheck) {
+                System.out.println("잘못된 입력입니다.");
+                System.out.print(sb);
+            }
+        } while (userInsertCheck);
+
         sb.setLength(0);
         return Integer.parseInt(input);
     }
@@ -73,23 +112,25 @@ public class BookView {
     public void bookIfSelect(List<BookVO> books){
         StringBuilder sb = new StringBuilder();
         int i = 0;
-        System.out.println(" 검색 목록");
-        System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+        sb.append(" 검색 목록\n");
+        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
         for (BookVO vo: books) {
-            System.out.printf(" %2d. %-50s\t%-5s\t%-10s\t%-9s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign());
+            sb.append(String.format(" %2d. %-50s\t%-5s\t%-10s\t%-9s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign()));
         }
-        System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        System.out.println(sb);
     }
 
     public void selectBook(List<BookVO> books){
         StringBuilder sb = new StringBuilder();
         int i = 0;
-        System.out.println(" 목록");
-        System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+        sb.append(" 목록\n");
+        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
         for (BookVO vo: books) {
-            System.out.printf(" %2d. %-50s\t%-5s\t%-10s\t%-9s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign());
+            sb.append(String.format(" %2d. %-50s\t%-5s\t%-10s\t%-9s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign()));
         }
-        System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        System.out.println(sb);
     }
 
     // 페이징 기법 메뉴창
@@ -112,7 +153,7 @@ public class BookView {
         return Integer.parseInt(input);
     }
 
-    public BookVO insertBook(Scanner sc) throws Exception {
+    public BookVO insertBook() throws Exception {
         System.out.println("책 입고 정보를 입력합니다.");
         String title = BookInsertRandom.inputLimit("제목 : ", 50);
         String author = BookInsertRandom.inputLimit("저자 : ", 15);
@@ -135,7 +176,7 @@ public class BookView {
         int price;
 
         StringBuilder sb = new StringBuilder();
-        sb.append("────────────────────────────────────────────────────────────────────\n");
+        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
         sb.append("\t\t 수정할 책 선택 : ");
         System.out.println(sb);
         String num = sc.nextLine();
@@ -146,18 +187,21 @@ public class BookView {
         }
         sb.setLength(0);
 
-        StringBuilder sb1 = new StringBuilder();
-        sb1.append("┌────────────────────────────────────────────────────────────────────┐\n");
-        sb1.append("│ 1.제목 │ 2.저자 │ 3.장르 │ 4.출판사 │ 5.발행연도 │ 6.가격 │ 0.취소 │\n");
-        sb1.append("└────────────────────────────────────────────────────────────────────┘\n");
-        sb1.append("수정할 항목 입력 :");
-        System.out.println(sb1);
+        sb.append("┌────────────────────────────────────────────────────────────────────┐\n");
+        sb.append("│ 1.제목 │ 2.저자 │ 3.장르 │ 4.출판사 │ 5.발행연도 │ 6.가격 │ 0.취소 │\n");
+        sb.append("└────────────────────────────────────────────────────────────────────┘\n");
+        sb.append(" 수정할 항목 입력 :");
+        System.out.println(sb);
         String input = sc.nextLine();
         while(!input.matches("^[0-6]+$")) {
             System.out.println("잘못된 입력입니다. 숫자만 입력해주세요.");
             System.out.print(sb);
             input = sc.nextLine();
         }
+        if ("0".equals(input)){
+            return null;
+        }
+
         int index = Integer.parseInt(num) - 1; // 리스트 인덱스는 0부터 시작하므로 선택한 숫자에서 1을 빼줌
 
 
@@ -198,7 +242,7 @@ public class BookView {
 
     public BookVO deleteBook(Scanner sc, List<BookVO> books){
         StringBuilder sb = new StringBuilder();
-        sb.append("────────────────────────────────────────────────────────────────────\n");
+        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
         sb.append("\t\t 삭제할 책 선택 : ");
         System.out.println(sb);
         String num = sc.nextLine();
@@ -235,7 +279,27 @@ public class BookView {
         }
     }
 
-    public void returnBook() {
+    public void returnBook(String loginId, Map<String, String> resultMap) {
         StringBuilder sb = new StringBuilder();
+        sb.append(loginId).append("님의 대출 현황 입니다.\n");
+        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        for (Map.Entry<String, String> entry : resultMap.entrySet()) {
+            sb.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
+        System.out.println(sb);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 package Book;
 
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public class BookService {
     private static BookService instance = new BookService();
@@ -27,7 +27,7 @@ public class BookService {
         return dao.deleteBook(vo);
     }
 
-    public void idSelectReturn() throws Exception {
-       // return dao.idSelectReturn();
+    public Map<String, String> idSelectReturn(String loginId) throws Exception {
+        return dao.idSelectReturn(loginId);
     }
 }

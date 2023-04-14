@@ -1,6 +1,7 @@
 package Book;
 
 import java.util.List;
+import java.util.Map;
 
 public class BookController {
     private static BookController instance = new BookController();
@@ -34,7 +35,7 @@ public class BookController {
         return service.deleteBook(vo);
     }
 
-    public void idSelectReturn() throws Exception {
-        //return service.idSelectReturn();
+    public Map<String, String> idSelectReturn(String loginId) throws Exception {
+        return service.idSelectReturn(loginId);
     }
 }
