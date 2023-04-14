@@ -33,4 +33,8 @@ public class BookController {
     public int deleteBook(BookVO vo) throws Exception {
         return service.deleteBook(vo);
     }
+
+    public void idSelectReturn() throws Exception {
+        //return service.idSelectReturn();
+    }
 }

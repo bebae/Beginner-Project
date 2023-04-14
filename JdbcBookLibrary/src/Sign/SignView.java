@@ -4,13 +4,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SignView {
-    public void printSigns(List<SignVO> list) throws Exception {
+    public int printSigns(List<SignVO> list) throws Exception {
 
         SignDAO signDAO = SignDAO.getInstance();
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("-----------------로그인-----------------");
+        System.out.println("┌───────────────────────────────────────────────┐");
+        System.out.println("├                                      로그인                                           ");
+        System.out.println("└───────────────────────────────────────────────┘");
         System.out.print("아이디를 입력하세요: ");
         String id = scanner.nextLine();
 
@@ -18,8 +20,19 @@ public class SignView {
         String password = scanner.nextLine();
 
         if (signDAO.checkLogin(id, password)) {
-            System.out.println("로그인 성공!");
-            // 로그인 성공 후에는 사용자가 원하는 작업을 진행하도록 메뉴를 출력하는 등의 코드를 추가할 수 있습니다.
+            if (id.equals("admin")) { // 관리자 로그인 체크
+                System.out.println("┌───────────────────────────────────────────────┐");
+                System.out.println("├                              관리자 로그인 성공!                                       ");
+                System.out.println("└───────────────────────────────────────────────┘");
+                return 2;
+                // admin 정보를 매개변수로 전달하여 getSigns() 메서드 호출
+            } else {
+                System.out.println("┌───────────────────────────────────────────────┐");
+                System.out.println("├                                     로그인 성공!                                       ");
+                System.out.println("└───────────────────────────────────────────────┘");
+                return 1;
+            }
         }
+        return 0;
     }
 }

@@ -32,7 +32,7 @@ public class BookView {
     }
     // 로그인 후 보일 목록
     // 책 검색 | 책 반납 / 책 검색 | 책 입고
-    public int bookUse(Scanner sc){
+    public int bookUse(Scanner sc, int loginCheck){
         StringBuilder sb = new StringBuilder();
         sb.append("┌────────────────────────────────────────────────────────────────────────────────┐\n");
         sb.append("│ 1.책 목록 │ 2.책 검색 │ 3.책 반납 │ 4.입고 │ 5.수정 │ 6.삭제 │ 0. 메인화면으로 │\n");
@@ -233,5 +233,9 @@ public class BookView {
         } else {
             System.out.println("정상적으로 업데이트되지 않았습니다.");
         }
+    }
+
+    public void returnBook() {
+        StringBuilder sb = new StringBuilder();
     }
 }

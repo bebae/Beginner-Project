@@ -26,4 +26,8 @@ public class BookService {
     public int deleteBook(BookVO vo) throws Exception {
         return dao.deleteBook(vo);
     }
+
+    public void idSelectReturn() throws Exception {
+       // return dao.idSelectReturn();
+    }
 }

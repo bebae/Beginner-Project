@@ -15,10 +15,10 @@ public class BookDAO {
 
     public Connection getConnection() throws Exception {
         Class.forName("oracle.jdbc.driver.OracleDriver");
-        String url = "jdbc:oracle:thin:@localhost:1521:XE";
-        String user = "pc030";
-        //String url = "jdbc:oracle:thin:@192.168.142.23:1521:1521:XE";
-//        String user = "project";
+        //String url = "jdbc:oracle:thin:@localhost:1521:XE";
+        //String user = "pc030";
+        String url = "jdbc:oracle:thin:@192.168.142.23:1521:XE";
+        String user = "project";
         return DriverManager.getConnection(url, user, "java");
     }
     public void close(Connection conn, Statement pstmt) throws SQLException {
@@ -252,4 +252,40 @@ public class BookDAO {
         close(conn, pstmt);
         return count;
     }
+
+    public void idSelectReturn() throws Exception {
+        conn = getConnection();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT");
+        sb.append("    b.title,");
+        sb.append("    l.ex_return_date");
+        sb.append("FROM");
+        sb.append("         loan l");
+        sb.append("    JOIN book b ON l.b_id = b.b_id");
+        sb.append("WHERE");
+        sb.append("    l.m_id = (");
+        sb.append("        SELECT");
+        sb.append("            m_id");
+        sb.append("        FROM");
+        sb.append("            member");
+        sb.append("        WHERE");
+        sb.append("            m_id = 'chopper'");
+        sb.append("    );");
+        pstmt = conn.prepareStatement(String.valueOf(sb));
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

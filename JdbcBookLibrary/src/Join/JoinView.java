@@ -14,9 +14,12 @@ public class JoinView {
         boolean run = true;
         while (run) {
             StringBuilder sb = new StringBuilder();
-            sb.append("┌───────────────────────────────────────────────────┐\n");
-            sb.append("├                      회원가입                     ┤\n");
-            sb.append(" 1.입력 2.수정 3.탈퇴 4.회원전체출력 5.메인메뉴 \n");
+            sb.append("┌───────────────────────────────────────────────┐\n");
+            sb.append("├                     회원가입                     ┤\n");
+            sb.append("└───────────────────────────────────────────────┘\n");
+            sb.append("┌───────────────────────────────────────────────┐\n");
+            sb.append("├ 1.입력 2.수정 3.탈퇴 4.회원전체출력 5.메인메뉴   ┤\n");
+            sb.append("└───────────────────────────────────────────────┘\n");
             sb.append("메뉴를 선택하세요: ");
             System.out.println(sb);
             sb.setLength(0);
@@ -65,13 +68,15 @@ public class JoinView {
                     int result = JoinDAO.insertJoin(joinVO);
 
                     if (result != 0) {
-                        System.out.println();
-                        System.out.println("****성공적으로 가입이 되었습니다!****");
-                        System.out.println();
-                        System.out.println("-----------[회원가입 확인]-----------");
+                        System.out.println("┌───────────────────────────────────────────────┐");
+                        System.out.println("├  ****성공적으로 가입이 되었습니다!****  ┤");
+                        System.out.println("└───────────────────────────────────────────────┘");
+                        System.out.println("─────────────────[회원가입 확인]─────────────────");
                         System.out.println(joinVO.toString());
                     } else {
-                        System.out.println("회원가입에 실패했습니다");
+                        System.out.println("┌───────────────────────────────────────────────┐");
+                        System.out.println("├         회원가입에 실패했습니다         ┤");
+                        System.out.println("└───────────────────────────────────────────────┘");
                     }
                     break;
 
@@ -119,11 +124,14 @@ public class JoinView {
 
                     int result1 = JoinDAO.updateJoin(updatedJoinVO);
 
-                    if (result1 != 0)
-                        System.out.println("회원정보가 수정되었습니다");
-
-                    else {
-                        System.out.println("회원정보수정에 실패했습니다");
+                    if (result1 != 0) {
+                        System.out.println("┌───────────────────────────────────────────────┐");
+                        System.out.println("├       회원정보가 수정되었습니다!      ┤");
+                        System.out.println("└───────────────────────────────────────────────┘");
+                    } else {
+                        System.out.println("┌───────────────────────────────────────────────┐");
+                        System.out.println("├      회원정보수정에 실패했습니다      ┤");
+                        System.out.println("└───────────────────────────────────────────────┘");
                     }
                     break;
 
@@ -141,19 +149,23 @@ public class JoinView {
 
                     int result2 = deleteJoin(deleteid);
 
-                    if (result2 != 0)
-                        System.out.println("성공적으로 탈퇴하였습니다. \n다음에 다시 가입해주세요.");
-
-                    else {
-                        System.out.println("회원정보수정에 실패했습니다");
+                    if (result2 != 0) {
+                        System.out.println("┌───────────────────────────────────────────────┐");
+                        System.out.println("├       성공적으로 탈퇴하였습니다.      ┤");
+                        System.out.println("└───────────────────────────────────────────────┘");
+                    } else {
+                        System.out.println("┌───────────────────────────────────────────────┐");
+                        System.out.println("├      회원정보수정에 실패했습니다      ┤");
+                        System.out.println("└───────────────────────────────────────────────┘");
                     }
                     break;
                 case 4: // 회원전체출력
                     List<JoinVO> joinList = joinDAO.selectAllJoin();
                     if (joinList != null) { // joinList가 null인지 체크
                         if (joinList.size() > 0) {
-                            System.out.println("-----------[전체 회원 목록]-----------");
-
+                            System.out.println("┌───────────────────────────────────────────────┐");
+                            System.out.println("├         [전체 회원 목록]          ┤");
+                            System.out.println("└───────────────────────────────────────────────┘");
                             for (JoinVO joinVO1 : joinList) {
                                 System.out.println(joinVO1.toString());
                             }

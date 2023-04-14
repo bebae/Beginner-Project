@@ -122,11 +122,14 @@ BEGIN
 END;
 /
 
-INSERT into LOAN (m_id, b_id, ex_return_date)
-	VALUES ('rudwls1','SE0000648797');
+-- 대출 테이블에 회원과 책 키값 가져오기만 하면 됨
+INSERT into LOAN (m_id, b_id)
+	VALUES ('rudwls1', 'SE0000648797');
 
 DELETE FROM book;
 select * from book;
+
+
 
 
 --member 테이블 회원ID, 이름, 비밀번호, 생년월일, 연락처, 이메일, 주소, 대출권수

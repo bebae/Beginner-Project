@@ -15,10 +15,10 @@ public class JoinDAO {
 
     public Connection getConnection() throws Exception {
         Class.forName("oracle.jdbc.driver.OracleDriver");
-        String url = "jdbc:oracle:thin:@localhost:1521:XE";
-        String user = "pc030";
-        //String url = "jdbc:oracle:thin:@192.168.142.23:1521:1521:XE";
-//        String user = "project";
+        //String url = "jdbc:oracle:thin:@localhost:1521:XE";
+        //String user = "pc030";
+        String url = "jdbc:oracle:thin:@192.168.142.23:1521:XE";
+        String user = "project";
         return DriverManager.getConnection(url, user, "java");
     }
 
