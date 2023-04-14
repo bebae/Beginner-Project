@@ -65,19 +65,25 @@ public class JoinView {
 				break;
 
 			case 2: // 수정 
-				System.out.print("수정할 아이디를 입력하세요: ");
+				System.out.print("아이디를 입력하세요: ");
 				String updateid = scanner.nextLine();
+				
+				 if(!JoinDAO.isMemberExist(updateid)) {
+				        System.out.println("존재하지 않는 아이디입니다.");
+				        break;
+				    }
+
 				System.out.print("수정할 비밀번호를 입력하세요: ");
 				String updatepassword = scanner.nextLine();
-				System.out.print("이름을 입력하세요: ");
+				System.out.print("수정할 이름을 입력하세요: ");
 				String updatename = scanner.nextLine();
-				System.out.print("생년월일 6자리를 입력하세요: ");
+				System.out.print("수정할 생년월일 6자리를 입력하세요: ");
 				String updatebirthDate = scanner.nextLine();
-				System.out.print("휴대전화 번호를 입력하세요: ");
+				System.out.print("수정할 휴대전화 번호를 입력하세요: ");
 				String updatephonenumber = scanner.nextLine();
-				System.out.print("이메일을 입력하세요: ");
+				System.out.print("수정할 이메일을 입력하세요: ");
 				String updateemail = scanner.nextLine();
-				System.out.print("주소를 입력하세요: ");
+				System.out.print("수정할 주소를 입력하세요: ");
 				String updateaddress = scanner.nextLine();
 
 				JoinVO updatedJoinVO = new JoinVO();
@@ -103,6 +109,12 @@ public class JoinView {
 			case 3: // 탈퇴
 				System.out.print("탈퇴할 아이디를 입력하세요: ");
 				String deleteid = scanner.nextLine();
+				
+				 if(!JoinDAO.isMemberExist(deleteid)) {
+				        System.out.println("존재하지 않는 아이디입니다.");
+				        break;
+				    }
+				
 				System.out.print("비밀번호를 입력하세요: ");
 				String deletepassword = scanner.nextLine();
 
@@ -132,7 +144,6 @@ public class JoinView {
 				}
 				break;
 			case 5: //종료
-				close();
 		        System.out.println("프로그램을 종료합니다.");
 		        System.out.flush();
 		        System.exit(0);
@@ -141,13 +152,8 @@ public class JoinView {
 		}
 	}
 
-	private void close() {
-		// TODO Auto-generated method stub
-		
-	}
 	private int deleteJoin(String id) throws Exception {
-		JoinDAO joinDAO = JoinDAO.getInstance1();
-	    return joinDAO.deleteJoin(id);
+	    return JoinDAO.deleteJoin(id);
 	}
 
 		

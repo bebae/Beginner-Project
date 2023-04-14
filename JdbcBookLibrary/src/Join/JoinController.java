@@ -9,9 +9,4 @@ public class JoinController {
 		List<JoinVO> list = service.getJoins();
 		view.printJoins1(list);
 	}
-//	public void getJoins2() throws Exception {
-//		List<JoinVO> list = service.getJoins();
-//		view.printJoins1(list);
-//	}
-	
 }
