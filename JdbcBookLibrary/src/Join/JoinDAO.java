@@ -84,21 +84,37 @@ public class JoinDAO {
 		 connection.close();
 		 return count;
   }
+     
+  public static boolean isMemberExist(String id) throws Exception {
+	    Class.forName("oracle.jdbc.driver.OracleDriver");
+	    Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.142.23:1521:xe","project","java");
+	    String sql = "SELECT * FROM member WHERE rtrim(m_id) = ?";
+	    PreparedStatement statement = connection.prepareStatement(sql);
+	    statement.setString(1, id);
+	    ResultSet rs = statement.executeQuery();
+	    boolean isExist = rs.next();
+	    rs.close();
+	    statement.close();
+	    connection.close();
+	    return isExist;
+	}
+  
+ 
   
      public static int updateJoin(JoinVO vo) throws Exception {
     	    Class.forName("oracle.jdbc.driver.OracleDriver");
     	    Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.142.23:1521:xe","project","java");
-    	    String sql = "INSERT "
-    		 		+ "    into member(m_id, name, password, birth_Date, phone_num, email, address) "
-    		 		+ "    values (?, ?, ?, ?, ?, ?, ?)";
+    	    String sql = "UPDATE" 
+    	    		+ "   member SET name=?, password=?, birth_Date=?, phone_num=?, email=?, address=?" 
+    	    		+ "   WHERE rtrim(m_id)=?";
     	    PreparedStatement statement = connection.prepareStatement(sql);
-    	    statement.setString(1, vo.getId());
-    	    statement.setString(2, vo.getName());
-    	    statement.setString(3, vo.getPassword());
-    	    statement.setString(4, vo.getBirthDate());
-    	    statement.setString(5, vo.getPhonenumber());
-    	    statement.setString(6, vo.getEmail());
-    	    statement.setString(7, vo.getAddress());
+    	    statement.setString(1, vo.getName());
+    	    statement.setString(2, vo.getPassword());
+    	    statement.setString(3, vo.getBirthDate());
+    	    statement.setString(4, vo.getPhonenumber());
+    	    statement.setString(5, vo.getEmail());
+    	    statement.setString(6, vo.getAddress());
+    	    statement.setString(7, vo.getId());
     	    int count = statement.executeUpdate();
     	    statement.close();
     	    connection.close();
@@ -106,11 +122,26 @@ public class JoinDAO {
      }
 
 
+     public static boolean isMemberExist1(String id) throws Exception {
+ 	    Class.forName("oracle.jdbc.driver.OracleDriver");
+ 	    Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.142.23:1521:xe","project","java");
+ 	    String sql = "SELECT * FROM member WHERE m_id=?";
+ 	    PreparedStatement statement = connection.prepareStatement(sql);
+ 	    statement.setString(1, id);
+ 	    ResultSet rs = statement.executeQuery();
+ 	    boolean isExist = rs.next();
+ 	    rs.close();
+ 	    statement.close();
+ 	    connection.close();
+ 	    return isExist;
+ 	}
+     
+     
 	 // delete from memo where id = ?
 	 public static int deleteJoin(String deleteId) throws Exception{
 		    Class.forName("oracle.jdbc.driver.OracleDriver");
 		    Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.142.23:1521:xe","project","java");
-		    String sql = "DELETE FROM member WHERE m_id = ?";
+		    String sql = "DELETE FROM member WHERE rtrim(m_id) = ?";
 		    PreparedStatement statement = connection.prepareStatement(sql);
 		    statement.setString(1, deleteId);
 		    int count = statement.executeUpdate();
