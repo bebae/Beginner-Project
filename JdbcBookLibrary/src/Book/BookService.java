@@ -30,4 +30,8 @@ public class BookService {
     public Map<String, String> idSelectReturn(String loginId) throws Exception {
         return dao.idSelectReturn(loginId);
     }
+
+    public int loanBokk(BookVO vo) throws Exception {
+        return dao.loanBook(vo);
+    }
 }

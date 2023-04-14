@@ -258,6 +258,7 @@ public class BookDAO {
         return count;
     }
 
+    // 반납
     public Map<String, String> idSelectReturn(String loginId) throws Exception {
 
         conn = getConnection();
@@ -278,26 +279,42 @@ public class BookDAO {
         sb.append("        FROM");
         sb.append("            member");
         sb.append("        WHERE");
-        sb.append("            m_id = ?");
+        sb.append("            rtrim(m_id) = ?");
         sb.append("    )");
         pstmt = conn.prepareStatement(String.valueOf(sb));
         pstmt.setString(1, loginId);
         ResultSet rs = pstmt.executeQuery();
 
-        if(rs.next()) {
-            String title = rs.getString("title");
-            String returnDate = rs.getString("ex_return_date");
-            resultMap.put(title, returnDate);
-
-            System.out.println(title+" : "+returnDate);
+        if (rs == null) {
+            System.out.println("대출 사항이 없습니다.");
         } else {
-            System.out.println("rs는 null 입니다.");
+            while (rs.next()) {
+                String title = rs.getString("title");
+                String returnDate = rs.getString("ex_return_date").substring(0, 13) + "시 대출함";
+                resultMap.put(title, returnDate);
+            }
         }
 
         sb.setLength(0);
+        assert rs != null;
         rs.close();
         close(conn, pstmt);
         return resultMap;
+    }
+
+    // 대출
+    public int loanBook(BookVO vo) throws Exception {
+        conn = getConnection();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT into loan (m_id, b_id) ");
+        sb.append("VALUES(?, ?) ");
+        pstmt.setString(1,"");
+        pstmt.setString(2,"");
+
+
+        int count = 0;
+        return count;
     }
 }
 

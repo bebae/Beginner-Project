@@ -91,7 +91,16 @@ public class FrontController {
                     view.bookIfSelect(selectTitle);
                     continue;
                 case 3:        // 책 대출
+                    selectBook = controller.selectBook();
+                    view.selectBook(selectBook);
 
+                    BookVO lBook = view.loanBook(sc,selectBook);                      // 대출 뷰
+                    if (lBook != null) {
+                        int loanBook = controller.loanBook(lBook);                  // 대출 확인 여부 DAO까지
+                        view.updateResult(loanBook);
+                    } else {
+                        System.out.println(" 수정을 취소합니다.");
+                    }
                     continue;
                 case 4:        // 책 반납
 

@@ -74,8 +74,7 @@ public class BookView {
                 userInsertCheck = !input.matches("^[0-2]+$");
             } else if ("admin".equals(loginId)) {   // 관리자
                 userInsertCheck = !input.matches("^[012567]+$");
-            } else {                                // 회원
-                System.out.println("user 입력값 체크");
+            } else {                                // 회원입력값 체크");
                 userInsertCheck = !input.matches("^[0-4]+$");
             }
 
@@ -281,12 +280,28 @@ public class BookView {
 
     public void returnBook(String loginId, Map<String, String> resultMap) {
         StringBuilder sb = new StringBuilder();
-        sb.append(loginId).append("님의 대출 현황 입니다.\n");
-        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append("\t").append(loginId).append("님의 대출 현황 입니다.\n");
+        sb.append("──────────────────────────────────────────────────\n");
         for (Map.Entry<String, String> entry : resultMap.entrySet()) {
-            sb.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            sb.append("\t").append(entry.getKey()).append("\t").append(entry.getValue()).append("\n");
         }
         System.out.println(sb);
+    }
+
+    public BookVO loanBook(Scanner sc, List<BookVO> selectBook) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append("\t\t 대출할 책 선택 : ");
+        System.out.println(sb);
+        String num = sc.nextLine();
+        while(!num.matches("^[1-9]+$")) {
+            System.out.println("잘못된 입력입니다.");
+            System.out.print(sb);
+            num = sc.nextLine();
+        }
+        sb.setLength(0);
+
+        return new BookVO();
     }
 }
 

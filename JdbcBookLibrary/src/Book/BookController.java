@@ -38,4 +38,8 @@ public class BookController {
     public Map<String, String> idSelectReturn(String loginId) throws Exception {
         return service.idSelectReturn(loginId);
     }
+
+    public int loanBook(BookVO vo) throws Exception {
+        return service.loanBokk(vo);
+    }
 }
