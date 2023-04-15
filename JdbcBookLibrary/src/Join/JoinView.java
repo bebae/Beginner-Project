@@ -14,12 +14,12 @@ public class JoinView {
         boolean run = true;
         while (run) {
             StringBuilder sb = new StringBuilder();
-            sb.append("┌───────────────────────────────────────────────┐\n");
+            sb.append("┌──────────────────────────────────────────────────┐\n");
             sb.append("├                     회원가입                     ┤\n");
-            sb.append("└───────────────────────────────────────────────┘\n");
-            sb.append("┌───────────────────────────────────────────────┐\n");
-            sb.append("├ 1.입력 2.수정 3.탈퇴 4.회원전체출력 5.메인메뉴   ┤\n");
-            sb.append("└───────────────────────────────────────────────┘\n");
+            sb.append("└──────────────────────────────────────────────────┘\n");
+            sb.append("┌──────────────────────────────────────────────────┐\n");
+            sb.append("│ 1.입력 2.수정 3.탈퇴 4.회원전체출력 5.메인메뉴   │\n");
+            sb.append("└──────────────────────────────────────────────────┘\n");
             sb.append("메뉴를 선택하세요: ");
             System.out.println(sb);
             sb.setLength(0);
@@ -69,13 +69,13 @@ public class JoinView {
 
                     if (result != 0) {
                         System.out.println("┌───────────────────────────────────────────────┐");
-                        System.out.println("├  ****성공적으로 가입이 되었습니다!****  ┤");
+                        System.out.println("├     ****성공적으로 가입이 되었습니다!****     ┤");
                         System.out.println("└───────────────────────────────────────────────┘");
                         System.out.println("─────────────────[회원가입 확인]─────────────────");
-                        System.out.println(joinVO.toString());
+                        System.out.println(joinVO);
                     } else {
                         System.out.println("┌───────────────────────────────────────────────┐");
-                        System.out.println("├         회원가입에 실패했습니다         ┤");
+                        System.out.println("├            회원가입에 실패했습니다            ┤");
                         System.out.println("└───────────────────────────────────────────────┘");
                     }
                     break;
@@ -126,11 +126,11 @@ public class JoinView {
 
                     if (result1 != 0) {
                         System.out.println("┌───────────────────────────────────────────────┐");
-                        System.out.println("├       회원정보가 수정되었습니다!      ┤");
+                        System.out.println("├           회원정보가 수정되었습니다!          ┤");
                         System.out.println("└───────────────────────────────────────────────┘");
                     } else {
                         System.out.println("┌───────────────────────────────────────────────┐");
-                        System.out.println("├      회원정보수정에 실패했습니다      ┤");
+                        System.out.println("├         회원정보 수정에 실패했습니다         ┤");
                         System.out.println("└───────────────────────────────────────────────┘");
                     }
                     break;
@@ -151,11 +151,11 @@ public class JoinView {
 
                     if (result2 != 0) {
                         System.out.println("┌───────────────────────────────────────────────┐");
-                        System.out.println("├       성공적으로 탈퇴하였습니다.      ┤");
+                        System.out.println("├            성공적으로 탈퇴하였습니다.         ┤");
                         System.out.println("└───────────────────────────────────────────────┘");
                     } else {
                         System.out.println("┌───────────────────────────────────────────────┐");
-                        System.out.println("├      회원정보수정에 실패했습니다      ┤");
+                        System.out.println("├             회원탈퇴에 실패했습니다           ┤");
                         System.out.println("└───────────────────────────────────────────────┘");
                     }
                     break;
@@ -164,7 +164,7 @@ public class JoinView {
                     if (joinList != null) { // joinList가 null인지 체크
                         if (joinList.size() > 0) {
                             System.out.println("┌───────────────────────────────────────────────┐");
-                            System.out.println("├         [전체 회원 목록]          ┤");
+                            System.out.println("├               [전체 회원 목록]                ┤");
                             System.out.println("└───────────────────────────────────────────────┘");
                             for (JoinVO joinVO1 : joinList) {
                                 System.out.println(joinVO1.toString());

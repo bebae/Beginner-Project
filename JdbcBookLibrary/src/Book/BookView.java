@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class BookView {
     private static final BookView instance = new BookView();
+    private final String LINE = "───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n";
     public  BookView() {
     }
     public static BookView getInstance() {
@@ -38,7 +39,7 @@ public class BookView {
         String loginId = signVO.getId();
         StringBuilder sb = new StringBuilder();
         sb.append("┌──────────────────────────────────");
-        if (loginId == null) {                  // 비회원
+        if (loginId.equals("")) {                  // 비회원
             sb.append( "──────");
         } else if ("admin".equals(loginId)) {   // 관리자
             sb.append("──────────────────────────────────────────");
@@ -48,17 +49,17 @@ public class BookView {
         sb.append("┐\n");
         sb.append("│ 1.책 목록 │");
         sb.append( " 2.책 검색 │");
-        if (!("admin".equals(loginId))) {   // 회원
+        if (!(loginId.equals("")) && !("admin".equals(loginId) )) {           // 회원
             sb.append(" 3.책 대출 │");
             sb.append(" 4.책 반납 │");
-        } else {                            // 관린자
-            sb.append( " 5.책 입고 │");
-            sb.append( " 6.책 수정 │");
-            sb.append( " 7.책 삭제 │");
+        } else if(signVO.getId().equals("admin")) {   // 관린자
+            sb.append( " 3.책 입고 │");
+            sb.append( " 4.책 수정 │");
+            sb.append( " 5.책 삭제 │");
         }
         sb.append( " 0.메인화면으로 │\n");
         sb.append("└──────────────────────────────────");
-        if (loginId == null) {                  // 비회원
+        if (loginId.equals("")) {                  // 비회원
             sb.append( "──────");
         } else if ("admin".equals(loginId)) {   // 관리자
             sb.append("──────────────────────────────────────────");
@@ -74,10 +75,10 @@ public class BookView {
 
         do {
             input = sc.nextLine();
-            if (loginId == null) {                  // 비회원
+            if (loginId.equals("")) {                  // 비회원
                 userInsertCheck = !input.matches("^[0-2]+$");
             } else if ("admin".equals(loginId)) {   // 관리자
-                userInsertCheck = !input.matches("^[012567]+$");
+                userInsertCheck = !input.matches("^[0-5]+$");
             } else {                                // 회원입력값 체크");
                 userInsertCheck = !input.matches("^[0-4]+$");
             }
@@ -110,17 +111,29 @@ public class BookView {
             input = sc.nextLine();
         }
         sb.setLength(0);
-        return Integer.parseInt(input);
+        int bookIfSelect = Integer.parseInt(input);
+        if (bookIfSelect == 0) {
+            return 0;
+        } else if (bookIfSelect == 1) {
+            System.out.print(" 제목 입력 : ");
+        } else if (bookIfSelect == 2) {
+            System.out.print(" 저자 입력 : ");
+        } else if (bookIfSelect == 3) {
+            System.out.print(" 장르 입력 : ");
+        } else if (bookIfSelect == 4) {
+            System.out.print(" 출판년도 입력 : ");
+        }
+        return bookIfSelect;
     }
     public void bookIfSelect(List<BookVO> books){
         StringBuilder sb = new StringBuilder();
         int i = 0;
         sb.append(" 검색 목록\n");
-        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append(LINE);
         for (BookVO vo: books) {
-            sb.append(String.format(" %2d. %-50s\t%-5s\t%-10s\t%-9s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign()));
+            sb.append(String.format(" %2d. %-40s\t%-5s\t%-10s\t%-9s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign()));
         }
-        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append(LINE);
         System.out.println(sb);
     }
 
@@ -128,11 +141,11 @@ public class BookView {
         StringBuilder sb = new StringBuilder();
         int i = 0;
         sb.append(" 목록\n");
-        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append(LINE);
         for (BookVO vo: books) {
-            sb.append(String.format(" %2d. %-50s\t%-5s\t%-10s\t%-9s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign()));
+            sb.append(String.format(" %2d. %-40s\t%-5s\t%-10s\t%-9s\n", ++i, vo.getTitle(), vo.getAuthor(), vo.getGenre(), vo.getCallSign()));
         }
-        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append(LINE);
         System.out.println(sb);
     }
 
@@ -179,14 +192,19 @@ public class BookView {
         int price;
 
         StringBuilder sb = new StringBuilder();
-        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append(LINE);
         sb.append("\t\t 수정할 책 선택 : ");
         System.out.print(sb);
         String num = sc.nextLine();
-        while(!num.matches("^[1-9]+$")) {
+        while(!num.matches("^[0-9]+$")) {
             System.out.println(" 잘못된 입력입니다.");
             System.out.print(sb);
             num = sc.nextLine();
+        }
+        int size = books.size();
+        if (Integer.parseInt(num) > size || Integer.parseInt(num) <= 0) {
+            System.out.println(" 목록에 수정할 책이 없습니다.");
+            return null;
         }
         sb.setLength(0);
 
@@ -197,7 +215,7 @@ public class BookView {
         System.out.print(sb);
         String input = sc.nextLine();
         while(!input.matches("^[0-6]+$")) {
-            System.out.println(" 잘못된 입력입니다. 숫자만 입력해주세요.");
+            System.out.println(" 잘못된 입력입니다. 0 ~ 6 숫자만 입력해주세요.");
             System.out.print(sb);
             input = sc.nextLine();
         }
@@ -209,7 +227,7 @@ public class BookView {
 
         BookVO uBook = books.get(index);
         uBook.setId(books.get(index).getId());
-        System.out.println(" "+uBook.getTitle() + "을(를) 수정합니다.");
+        System.out.println("「"+uBook.getTitle() + "」 책을 수정합니다.");
 
         switch (input) {
             case "1":
@@ -244,7 +262,7 @@ public class BookView {
 
     public BookVO deleteBook(Scanner sc, List<BookVO> books){
         StringBuilder sb = new StringBuilder();
-        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append(LINE);
         sb.append("\t\t 삭제할 책 선택【0.취소】 : ");
         System.out.print(sb);
         String num = sc.nextLine();
@@ -294,15 +312,15 @@ public class BookView {
         int i=0;
         StringBuilder sb = new StringBuilder();
         sb.append("\t\t").append(signVO.getId()).append("님의 대출 현황 입니다.\n");
-        sb.append("──────────────────────────────────────────────────\n");
+        sb.append("──────────────────────────────────────────────────────────────\n");
         if (loans != null) {
             for (LoanVO vo: loans) {
-                sb.append(String.format(" %2d. %-50s\t%-10s\n", ++i, vo.getTitle(), vo.getExLonaDate()));
+                sb.append(String.format(" %2d. %-30s\t%-10s\n", ++i, vo.getTitle(), vo.getExLonaDate()));
             }
         } else {
-            sb.append(" 반납할 책이 없습니다.");
+            sb.append("  반납할 책이 없습니다.");
         }
-        sb.append("──────────────────────────────────────────────────\n");
+        sb.append("──────────────────────────────────────────────────────────────\n");
         sb.append(" 반납할 책 선택 【0.취소】 : ");
         System.out.print(sb);
         String num = sc.nextLine();
@@ -313,11 +331,8 @@ public class BookView {
                 num = sc.nextLine();
             }
         } else {
-            while (!num.matches("^0+$")) {
-                System.out.println(" 잘못된 입력입니다. 반납할 책이 없습니다.");
-                System.out.print(sb);
-                num = sc.nextLine();
-            }
+            System.out.println("  반납할 책이 없습니다.");
+            return null;
         }
         if ("0".equals(num)){
             return null;
@@ -343,7 +358,7 @@ public class BookView {
 
     public BookVO loanBook(Scanner sc, List<BookVO> selectBook) {
         StringBuilder sb = new StringBuilder();
-        sb.append("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+        sb.append("");
         sb.append(" 대출할 책 선택【0.취소】: ");
         System.out.print(sb);
         String num = sc.nextLine();

@@ -193,7 +193,6 @@ public class JoinDAO {
 
             while (rs.next()) {
                 String id = rs.getString("m_id");
-                String password = rs.getString("password");
                 String name = rs.getString("name");
                 String birthDate = rs.getString("birth_Date");
                 String phonenumber = rs.getString("phone_num");
@@ -202,7 +201,7 @@ public class JoinDAO {
                 int loansnumber = rs.getInt("loans_num");
 
 
-                members.add(new JoinVO(id, password, name, birthDate, phonenumber, email, address, loansnumber));
+                members.add(new JoinVO(id, name, birthDate, phonenumber, email, address, loansnumber));
             }
 
         } catch (SQLException e) {
