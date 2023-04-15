@@ -109,7 +109,7 @@ CYCLE
     NOCACHE 
     NOORDER;
 -- 대출 트리거
-CREATE OR REPLACE TRIGGER loan_trigger  -- 대출번호 L_number 생성 하는 트리거
+CREATE OR REPLACE TRIGGER loan_trigger_num  -- 대출번호 L_number 생성 하는 트리거
     BEFORE INSERT ON loan
     FOR EACH ROW
 BEGIN
@@ -122,13 +122,24 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE TRIGGER loan_trigger          -- 대출하면 책 테이블에 대출여부 업데이트
+CREATE OR REPLACE TRIGGER loan_trigger_Y             -- 대출하면 책 테이블에 대출여부 Y 업데이트
 AFTER INSERT ON loan
 FOR EACH ROW 
 BEGIN
   UPDATE book
   SET loan_yn = 'Y'
   WHERE book.b_id = :NEW.b_id;
+
+  UPDATE member
+  SET loans_num = loans_num + 1
+  WHERE member.m_id = :NEW.m_id;
+END;
+/
+CREATE OR REPLACE TRIGGER loan_trigger_N           -- 대출하면 책 테이블에 대출여부 N 업데이트
+AFTER UPDATE ON loan
+FOR EACH ROW
+BEGIN
+  UPDATE book SET loan_yn = 'N' WHERE book.b_id = :NEW.b_id;
 END;
 /
 

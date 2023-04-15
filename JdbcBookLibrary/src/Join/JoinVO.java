@@ -125,8 +125,8 @@ public class JoinVO {
 
     @Override
     public String toString() {
-        String str = String.format("아이디:%s 비밀번호:%s 이름:%s 생일:%s 번호:%s 이메일:%s 주소:%s n",
-                id, password, name, birthDate, phonenumber, email, address);
+        String str = String.format("아이디:%s 이름:%s 생일:%s 번호:%s 이메일:%s 주소:%s n",
+                id, name, birthDate.substring(5,10), phonenumber, email, address);
         return str;
 
     }
