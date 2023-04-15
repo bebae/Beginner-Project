@@ -193,7 +193,7 @@ public class BookView {
 
         StringBuilder sb = new StringBuilder();
         sb.append(LINE);
-        sb.append("\t\t 수정할 책 선택 : ");
+        sb.append("\t\t 수정할 책 선택【0.취소】: ");
         System.out.print(sb);
         String num = sc.nextLine();
         while(!num.matches("^[0-9]+$")) {
@@ -202,8 +202,10 @@ public class BookView {
             num = sc.nextLine();
         }
         int size = books.size();
-        if (Integer.parseInt(num) > size || Integer.parseInt(num) <= 0) {
+        if (Integer.parseInt(num) > size) {
             System.out.println(" 목록에 수정할 책이 없습니다.");
+            return null;
+        } else if (Integer.parseInt(num) <= 0){
             return null;
         }
         sb.setLength(0);

@@ -100,7 +100,7 @@ ALTER TABLE loan ADD (
     CONSTRAINT r_1 FOREIGN KEY ( m_id )
         REFERENCES member ( m_id )
 );
--- 대출 시퀸스 및 트리거
+-- 대출 시퀸스
 CREATE SEQUENCE loan_seq
     INCREMENT BY 1
     START WITH 1
@@ -108,8 +108,8 @@ CREATE SEQUENCE loan_seq
 CYCLE 
     NOCACHE 
     NOORDER;
-
-CREATE OR REPLACE TRIGGER loan_trigger
+-- 대출 트리거
+CREATE OR REPLACE TRIGGER loan_trigger  -- 대출번호 L_number 생성 하는 트리거
     BEFORE INSERT ON loan
     FOR EACH ROW
 BEGIN
@@ -119,6 +119,16 @@ BEGIN
     
     :NEW.loan_date := SYSDATE;
     :NEW.ex_return_date := SYSDATE + 7;
+END;
+/
+
+CREATE OR REPLACE TRIGGER loan_trigger          -- 대출하면 책 테이블에 대출여부 업데이트
+AFTER INSERT ON loan
+FOR EACH ROW 
+BEGIN
+  UPDATE book
+  SET loan_yn = 'Y'
+  WHERE book.b_id = :NEW.b_id;
 END;
 /
 
