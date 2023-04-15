@@ -3,6 +3,8 @@ import Book.BookVO;
 import Book.BookView;
 import Join.JoinController;
 import Sign.SignController;
+import Sign.SignDAO;
+import Sign.SignVO;
 
 import java.util.List;
 import java.util.Map;
@@ -20,19 +22,18 @@ public class FrontController {
     private Scanner sc = new Scanner(System.in);
     public void process() throws Exception {
         while (true) {
-            // View에 선택창 불러오는 부분
+            // View 선택창 불러오는 부분
             int menu = view.mainMenu(sc);
             int pageSelect = 1;         // 페이지 기본값
-            String loginId = "";
             switch (menu) {
                 // 로그인
                 case 1:
-                    SignController signControllerController = new SignController();
-                    loginId = signControllerController.getSigns();
-                    if (loginId == null) {
+                    SignController signController = new SignController();
+                    SignVO signVO = signController.getSigns();
+                    if (signVO == null){
                         continue;
                     }
-                    innerMenu(pageSelect, loginId);
+                    innerMenu(pageSelect, signVO);
                     break;
                 // 회원가입
                 case 2:
@@ -42,8 +43,7 @@ public class FrontController {
                     continue;
                 // 비회원
                 case 3:
-                    loginId = null;
-                    innerMenu(pageSelect, loginId);
+                    innerMenu(pageSelect, new SignVO());
                     break;
                 case 0:
                     System.out.println("프로그램을 종료합니다.");
@@ -52,11 +52,11 @@ public class FrontController {
             }
         }
     }
-    public void innerMenu(int pageSelect, String loginId) throws Exception {
+    public void innerMenu(int pageSelect, SignVO signVO) throws Exception {
         //                    BookVo loginMember = view.로그인(권한 없는 사용자);
         boolean run = true;
         while (run) {
-            int bookcase = view.bookUse(sc, loginId);
+            int bookcase = view.bookUse(sc, signVO);
             List<BookVO> selectBook;
             switch (bookcase) {
                 case 1:        // 책 목록 페이징
@@ -96,15 +96,15 @@ public class FrontController {
 
                     BookVO lBook = view.loanBook(sc,selectBook);                      // 대출 뷰
                     if (lBook != null) {
-                        int loanBook = controller.loanBook(lBook, loginId);                  // 대출 확인 여부 DAO까지
+                        int loanBook = controller.loanBook(lBook, signVO);                  // 대출 확인 여부 DAO까지
                         view.loanResult(loanBook);
                     } else {
                         System.out.println(" 수정을 취소합니다.");
                     }
                     continue;
                 case 4:        // 책 반납
-                    Map<String, String> resultMap =  controller.idSelectReturn(loginId);   // 반납 목록      // 대출테이블 참고해서 id에 맞는 책 제목과 반납 예정일 리턴하는 List DAO
-                    view.returnBook(sc, loginId, resultMap);      // 반납 뷰
+                    Map<String, String> resultMap =  controller.idSelectReturn(signVO);   // 반납 목록      // 대출테이블 참고해서 id에 맞는 책 제목과 반납 예정일 리턴하는 List DAO
+                    view.returnBook(sc, signVO, resultMap);      // 반납 뷰
                                 // 책 반납 처리 DAO
 
                     continue;

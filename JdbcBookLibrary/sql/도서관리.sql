@@ -130,7 +130,7 @@ DELETE FROM book;
 select * from book;
 
 
-
+SELECT    rtrim(b.title),    rtrim(l.ex_return_date) FROM         loan l    JOIN book b ON l.b_id = b.b_id WHERE    l.m_id = (        SELECT            m_id        FROM            member        WHERE            m_id = 'rudwls1'    );
 
 --member 테이블 회원ID, 이름, 비밀번호, 생년월일, 연락처, 이메일, 주소, 대출권수
 INSERT

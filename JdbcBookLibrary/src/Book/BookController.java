@@ -1,5 +1,7 @@
 package Book;
 
+import Sign.SignVO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -35,11 +37,11 @@ public class BookController {
         return service.deleteBook(vo);
     }
 
-    public Map<String, String> idSelectReturn(String loginId) throws Exception {
-        return service.idSelectReturn(loginId);
+    public Map<String, String> idSelectReturn(SignVO signVO) throws Exception {
+        return service.idSelectReturn(signVO);
     }
 
-    public int loanBook(BookVO vo, String loginId) throws Exception {
-        return service.loanBook(vo, loginId);
+    public int loanBook(BookVO vo, SignVO signVO) throws Exception {
+        return service.loanBook(vo, signVO);
     }
 }

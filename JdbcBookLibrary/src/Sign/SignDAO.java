@@ -36,7 +36,7 @@ public class SignDAO {
     public List<SignVO> getSigns() throws Exception {
         conn = getConnection();
         Statement statement = conn.createStatement();
-        String sql = "select m_id, password from member";
+        String sql = "SELECT m_id, password FROM member";
         ResultSet resultSet = statement.executeQuery(sql);
         List<SignVO> list = new ArrayList<>();
         while (resultSet.next()) {
@@ -51,19 +51,20 @@ public class SignDAO {
         return list;
     }
 
-    public SignVO getSign(String serachId) throws Exception {
+    public SignVO getSign(String searchId) throws Exception {
         conn = getConnection();
-        String sql = "select m_id, password wheren m_id = ?";
+        String sql = "SELECT m_id, password FROM member WHERE rtrim(m_id) = ?";
         pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, serachId);
+        pstmt.setString(1, searchId);
         ResultSet resultSet = pstmt.executeQuery();
         SignVO vo = null;
-
         if (resultSet.next()) {
             resultSet.getString("m_id");
             String id = resultSet.getString("m_id");
             String password = resultSet.getString("password");
-            vo = new SignVO(id, password);
+            vo = new SignVO(id, password);                                                  /////// 여기가 핵심
+        } else {
+            System.out.println("rs null");
         }
         resultSet.close();
         close(conn, pstmt);

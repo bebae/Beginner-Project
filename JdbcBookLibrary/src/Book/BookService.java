@@ -1,5 +1,7 @@
 package Book;
 
+import Sign.SignVO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -27,11 +29,11 @@ public class BookService {
         return dao.deleteBook(vo);
     }
 
-    public Map<String, String> idSelectReturn(String loginId) throws Exception {
-        return dao.idSelectReturn(loginId);
+    public Map<String, String> idSelectReturn(SignVO signVO) throws Exception {
+        return dao.idSelectReturn(signVO);
     }
 
-    public int loanBook(BookVO vo, String loginId) throws Exception {
-        return dao.loanBook(vo, loginId);
+    public int loanBook(BookVO vo, SignVO signVO) throws Exception {
+        return dao.loanBook(vo, signVO);
     }
 }

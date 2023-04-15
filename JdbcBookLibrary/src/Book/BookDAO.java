@@ -1,5 +1,7 @@
 package Book;
 
+import Sign.SignVO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -259,7 +261,7 @@ public class BookDAO {
     }
 
     // 반납
-    public Map<String, String> idSelectReturn(String loginId) throws Exception {
+    public Map<String, String> idSelectReturn(SignVO signVO) throws Exception {
 
         conn = getConnection();
 
@@ -282,7 +284,7 @@ public class BookDAO {
         sb.append("            rtrim(m_id) = ?");
         sb.append("    )");
         pstmt = conn.prepareStatement(String.valueOf(sb));
-        pstmt.setString(1, loginId);
+        pstmt.setString(1, signVO.getId());
         ResultSet rs = pstmt.executeQuery();
 
         if (rs == null) {
@@ -303,7 +305,7 @@ public class BookDAO {
     }
 
     // 대출
-    public int loanBook(BookVO vo, String loginId) throws Exception {
+    public int loanBook(BookVO vo, SignVO signVO) throws Exception {
         conn = getConnection();
 
         StringBuilder sb = new StringBuilder();
@@ -311,14 +313,14 @@ public class BookDAO {
         sb.append("VALUES(?, ?) ");
         pstmt = conn.prepareStatement(String.valueOf(sb));
 
-        pstmt.setString(1, loginId);
+        pstmt.setString(1, signVO.getId());
         pstmt.setString(2, vo.getId());
 
         sb.setLength(0);
-        sb.append(loginId);
+        sb.append(vo.getId());
         sb.append("님께서 「");
         sb.append(vo.getTitle());
-        sb.append("」 을 대출하셨습니다.");
+        sb.append("」 책을 대출하셨습니다.");
 
         int count = pstmt.executeUpdate();
         close(conn, pstmt);

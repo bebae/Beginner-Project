@@ -1,5 +1,7 @@
 package Book;
 
+import Sign.SignVO;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -30,7 +32,8 @@ public class BookView {
     }
     // 로그인 후 보일 목록
     // 책 검색 | 책 반납 / 책 검색 | 책 입고
-    public int bookUse(Scanner sc, String loginId){
+    public int bookUse(Scanner sc, SignVO signVO){
+        String loginId = signVO.getId();
         StringBuilder sb = new StringBuilder();
         sb.append("┌──────────────────────────────────");
         if (loginId == null) {                  // 비회원
@@ -97,7 +100,7 @@ public class BookView {
         sb.append("│ 4. 출판년도로 검색 │\n");
         sb.append("│ 0. 검색취소        │\n");
         sb.append("└────────────────────┘\n");
-        sb.append("번호 선택 > ");
+        sb.append(" 번호 선택 > ");
         System.out.print(sb);
         String input = sc.nextLine();
         while(!input.matches("^[0-5]+$")) {
@@ -278,10 +281,10 @@ public class BookView {
         }
     }
 
-    public void returnBook(Scanner sc, String loginId, Map<String, String> resultMap) {
+    public void returnBook(Scanner sc, SignVO signVO, Map<String, String> resultMap) {
         int i=0;
         StringBuilder sb = new StringBuilder();
-        sb.append("\t\t").append(loginId).append("님의 대출 현황 입니다.\n");
+        sb.append("\t\t").append(signVO.getId()).append("님의 대출 현황 입니다.\n");
         sb.append("──────────────────────────────────────────────────\n");
         for (Map.Entry<String, String> entry : resultMap.entrySet()) {
             sb.append("  ").append(++i).append(".\t").append(entry.getKey()).append("\t").append(entry.getValue()).append("\n");
