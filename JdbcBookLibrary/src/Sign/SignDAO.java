@@ -53,7 +53,7 @@ public class SignDAO {
 
     public SignVO getSign(String searchId) throws Exception {
         conn = getConnection();
-        String sql = "SELECT m_id, password FROM member WHERE rtrim(m_id) = ?";
+        String sql = "SELECT rtrim(m_id) m_id, password FROM member WHERE rtrim(m_id) = ?";
         pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, searchId);
         ResultSet resultSet = pstmt.executeQuery();

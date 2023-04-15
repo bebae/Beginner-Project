@@ -37,11 +37,15 @@ public class BookController {
         return service.deleteBook(vo);
     }
 
-    public Map<String, String> idSelectReturn(SignVO signVO) throws Exception {
+    public List<LoanVO> idSelectReturn(SignVO signVO) throws Exception {
         return service.idSelectReturn(signVO);
     }
 
     public int loanBook(BookVO vo, SignVO signVO) throws Exception {
         return service.loanBook(vo, signVO);
+    }
+
+    public int returnBook(LoanVO rBook) throws Exception {
+        return service.returnBook(rBook);
     }
 }

@@ -1,6 +1,7 @@
 import Book.BookController;
 import Book.BookVO;
 import Book.BookView;
+import Book.LoanVO;
 import Join.JoinController;
 import Sign.SignController;
 import Sign.SignDAO;
@@ -53,7 +54,6 @@ public class FrontController {
         }
     }
     public void innerMenu(int pageSelect, SignVO signVO) throws Exception {
-        //                    BookVo loginMember = view.로그인(권한 없는 사용자);
         boolean run = true;
         while (run) {
             int bookcase = view.bookUse(sc, signVO);
@@ -99,14 +99,18 @@ public class FrontController {
                         int loanBook = controller.loanBook(lBook, signVO);                  // 대출 확인 여부 DAO까지
                         view.loanResult(loanBook);
                     } else {
-                        System.out.println(" 수정을 취소합니다.");
+                        System.out.println(" 대출을 취소합니다.");
                     }
                     continue;
                 case 4:        // 책 반납
-                    Map<String, String> resultMap =  controller.idSelectReturn(signVO);   // 반납 목록      // 대출테이블 참고해서 id에 맞는 책 제목과 반납 예정일 리턴하는 List DAO
-                    view.returnBook(sc, signVO, resultMap);      // 반납 뷰
-                                // 책 반납 처리 DAO
-
+                    List<LoanVO> loanVOList =  controller.idSelectReturn(signVO);   // 반납 목록      // 대출테이블 참고해서 id에 맞는 책 제목과 반납 예정일 리턴하는 List DAO
+                    LoanVO rBook = view.returnBook(sc, signVO, loanVOList);      // 반납 뷰
+                    if (rBook != null) {
+                        int returnBook = controller.returnBook(rBook);            // 책 반납 처리 DAO (delete 가 아니고 update)
+                        view.returnResult(returnBook);
+                    } else {
+                        System.out.println(" 반납을 취소합니다.");
+                    }
                     continue;
                 case 5:         // 책 입고
                     BookVO iBook = view.insertBook();
@@ -134,7 +138,12 @@ public class FrontController {
                     view.selectBook(selectBook);
 
                     BookVO dBook = view.deleteBook(sc, selectBook);
-                    int deleteBook = controller.deleteBook(dBook);
+                    if (dBook != null) {
+                        int deleteBook = controller.deleteBook(dBook);
+                        view.deleteResult(deleteBook);
+                    } else {
+                        System.out.println(" 삭제를 취소합니다.");
+                    }
                     continue;
                 default:
                     System.out.println(" 메인화면으로 돌아갑니다.");

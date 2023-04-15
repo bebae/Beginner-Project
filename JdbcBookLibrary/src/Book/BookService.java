@@ -29,11 +29,15 @@ public class BookService {
         return dao.deleteBook(vo);
     }
 
-    public Map<String, String> idSelectReturn(SignVO signVO) throws Exception {
+    public List<LoanVO> idSelectReturn(SignVO signVO) throws Exception {
         return dao.idSelectReturn(signVO);
     }
 
     public int loanBook(BookVO vo, SignVO signVO) throws Exception {
         return dao.loanBook(vo, signVO);
+    }
+
+    public int returnBook(LoanVO rBook) throws Exception {
+        return dao.returnBook(rBook);
     }
 }

@@ -4,6 +4,7 @@ import Sign.SignVO;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -236,8 +237,6 @@ public class BookDAO {
         }
         pstmt.setString(index, vo.getId());
 
-
-        sb.append("수정부분입니다.\n");
         System.out.println(sb);
 
         int count = pstmt.executeUpdate();
@@ -260,15 +259,17 @@ public class BookDAO {
         return count;
     }
 
-    // 반납
-    public Map<String, String> idSelectReturn(SignVO signVO) throws Exception {
+    // 반납 책 리스트
+    public List<LoanVO> idSelectReturn(SignVO signVO) throws Exception {
 
         conn = getConnection();
 
-        Map<String, String> resultMap = new HashMap<>();
+        List<LoanVO> list = new ArrayList<>();
 
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT");
+        sb.append("    l.m_id,");
+        sb.append("    l.l_number,");
         sb.append("    b.title,");
         sb.append("    l.ex_return_date ");
         sb.append("FROM");
@@ -281,19 +282,23 @@ public class BookDAO {
         sb.append("        FROM");
         sb.append("            member");
         sb.append("        WHERE");
-        sb.append("            rtrim(m_id) = ?");
+        sb.append("            rtrim(m_id) = ? ");
+        sb.append("          AND real_return_date IS NULL");           // 회원 ID와 같으면서 반납일이 NULL 만 조회
         sb.append("    )");
         pstmt = conn.prepareStatement(String.valueOf(sb));
         pstmt.setString(1, signVO.getId());
         ResultSet rs = pstmt.executeQuery();
 
         if (rs == null) {
-            System.out.println("대출 사항이 없습니다.");
+            System.out.println(" 대출 사항이 없습니다.");
         } else {
             while (rs.next()) {
+                String id = rs.getString("m_id");
+                String loanNumber = rs.getString("l_number");
                 String title = rs.getString("title");
-                String returnDate = rs.getString("ex_return_date").substring(0, 13) + "시 대출함";
-                resultMap.put(title, returnDate);
+                Date exReturnDate = rs.getDate("ex_return_date");
+                LoanVO vo = new LoanVO(id, loanNumber, title, exReturnDate);
+                list.add(vo);
             }
         }
 
@@ -301,7 +306,7 @@ public class BookDAO {
         assert rs != null;
         rs.close();
         close(conn, pstmt);
-        return resultMap;
+        return list;
     }
 
     // 대출
@@ -320,7 +325,31 @@ public class BookDAO {
         sb.append(vo.getId());
         sb.append("님께서 「");
         sb.append(vo.getTitle());
-        sb.append("」 책을 대출하셨습니다.");
+        sb.append("」 책을 대출 하셨습니다.");
+
+        int count = pstmt.executeUpdate();
+        close(conn, pstmt);
+        return count;
+    }
+
+    // 반납 처리 UPDATE
+    public int returnBook(LoanVO rBook) throws Exception {
+        conn = getConnection();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE loan SET real_return_date = ? WHERE  rtrim(m_id) = ? AND l_number = ? ");
+        pstmt = conn.prepareStatement(String.valueOf(sb));
+
+        pstmt.setDate(1, (java.sql.Date) rBook.getExLonaDate());
+        pstmt.setString(2, rBook.getId());
+        pstmt.setString(3, rBook.getLongId());
+
+
+        sb.setLength(0);
+        sb.append(rBook.getId());
+        sb.append("님께서 「");
+        sb.append(rBook.getTitle());
+        sb.append("」 책을 반납 하셨습니다.");
 
         int count = pstmt.executeUpdate();
         close(conn, pstmt);
