@@ -78,7 +78,7 @@ public class BookInsertRandom {
         // '0000' 추가
         sb.append("0000");
         // 6자리 랜덤 숫자 추가
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             if (i == 0) sb.append((char) (RANDOM.nextInt(9)+1 + '0'));
             sb.append((char) (RANDOM.nextInt(10) + '0')); // 0~9 중 랜덤한 숫자 문자를 추가
         }

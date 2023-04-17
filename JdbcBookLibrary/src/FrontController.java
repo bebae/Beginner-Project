@@ -138,19 +138,19 @@ public class FrontController {
 
                         continue;
                     }
-                    if (bookcase == 5) {         // 책 삭제
-                        selectBook = controller.selectBook();
-                        view.selectBook(selectBook);
-
-                        BookVO dBook = view.deleteBook(sc, selectBook);
-                        if (dBook != null) {
-                            int deleteBook = controller.deleteBook(dBook);
-                            view.deleteResult(deleteBook);
-                        } else {
-                            System.out.println(" 삭제를 취소합니다.");
-                        }
-                        continue;
-                    }
+//                    if (bookcase == 5) {         // 책 삭제
+//                        selectBook = controller.selectBook();
+//                        view.selectBook(selectBook);
+//
+//                        BookVO dBook = view.deleteBook(sc, selectBook);
+//                        if (dBook != null) {
+//                            int deleteBook = controller.deleteBook(dBook);
+//                            view.deleteResult(deleteBook);
+//                        } else {
+//                            System.out.println(" 삭제를 취소합니다.");
+//                        }
+//                        continue;
+//                    }
                 }
                 default:
                     System.out.println(" 메인화면으로 돌아갑니다.");
