@@ -307,7 +307,7 @@ public class BookDAO {
         return list;
     }
 
-    // 대출
+    // 대출 테이블에 데이터 입력
     public int loanBook(BookVO vo, SignVO signVO) throws Exception {
         conn = getConnection();
 

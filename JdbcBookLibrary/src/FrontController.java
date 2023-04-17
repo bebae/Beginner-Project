@@ -4,11 +4,9 @@ import Book.BookView;
 import Book.LoanVO;
 import Join.JoinController;
 import Sign.SignController;
-import Sign.SignDAO;
 import Sign.SignVO;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class FrontController {
@@ -44,7 +42,6 @@ public class FrontController {
                 case 2:
                     JoinController joinController = new JoinController();
                     joinController.getJoins();
-//                    Book.BookVO joinMember = view.회원가입(scanner)
                     continue;
                     // 비회원
                 case 3:

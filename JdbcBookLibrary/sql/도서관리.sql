@@ -140,6 +140,10 @@ AFTER UPDATE ON loan
 FOR EACH ROW
 BEGIN
   UPDATE book SET loan_yn = 'N' WHERE book.b_id = :NEW.b_id;
+  
+   UPDATE member
+  SET loans_num = loans_num - 1
+  WHERE member.m_id = :NEW.m_id;
 END;
 /
 
