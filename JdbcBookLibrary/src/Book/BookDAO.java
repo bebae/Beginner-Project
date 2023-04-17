@@ -246,7 +246,8 @@ public class BookDAO {
         conn = getConnection();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("DELETE FROM book WHERE rtrim(b_id) = ?");
+        System.out.println(vo.getId());
+        sb.append("DELETE FROM book WHERE b_id = ?");
 
         pstmt = conn.prepareStatement(String.valueOf(sb));
         pstmt.setString(1, vo.getId());

@@ -42,7 +42,7 @@ public class BookView {
         if (loginId.equals("")) {                  // 비회원
             sb.append( "──────");
         } else if ("admin".equals(loginId)) {   // 관리자
-            sb.append("──────────────────────────────");
+            sb.append("──────────────────────────────────────────");
         } else {                                // 회원
             sb.append("──────────────────────────────");
         }
@@ -55,14 +55,14 @@ public class BookView {
         } else if(signVO.getId().equals("admin")) {   // 관린자
             sb.append( " 3.책 입고 │");
             sb.append( " 4.책 수정 │");
-//            sb.append( " 5.책 삭제 │");
+            sb.append( " 5.책 삭제 │");
         }
         sb.append( " 0.메인화면으로 │\n");
         sb.append("└──────────────────────────────────");
         if (loginId.equals("")) {                  // 비회원
             sb.append( "──────");
         } else if ("admin".equals(loginId)) {   // 관리자
-            sb.append("──────────────────────────────");
+            sb.append("──────────────────────────────────────────");
         } else {                                // 회원
             sb.append("──────────────────────────────");
         }
@@ -78,7 +78,7 @@ public class BookView {
             if (loginId.equals("")) {                  // 비회원
                 userInsertCheck = !input.matches("^[0-2]+$");
             } else if ("admin".equals(loginId)) {   // 관리자
-                userInsertCheck = !input.matches("^[0-4]+$");
+                userInsertCheck = !input.matches("^[0-5]+$");
             } else {                                // 회원입력값 체크");
                 userInsertCheck = !input.matches("^[0-4]+$");
             }
